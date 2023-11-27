@@ -1,16 +1,20 @@
 
-// HypotheekDlg.h : header file
+// CHypotheekDialog.h : header file
 //
 
 #pragma once
 
+#include "MyTabControl.h"
 
-// CHypotheekDlg dialog
-class CHypotheekDlg : public CDialogEx
+class Inifile;
+
+// CHypotheekDialog dialog
+class CHypotheekDialog : public CDialogEx
 {
 // Construction
 public:
-	CHypotheekDlg(CWnd* pParent = nullptr);	// standard constructor
+	CHypotheekDialog(Inifile& inifile, CWnd* pParent = nullptr);	// standard constructor
+	~CHypotheekDialog();
 
 // Dialog Data
 #ifdef AFX_DESIGN_TIME
@@ -31,4 +35,8 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+
+private:
+	MyTabControl mTabControl;
+	Inifile& mInifile;
 };

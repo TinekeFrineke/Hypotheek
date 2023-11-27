@@ -396,3 +396,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/Hypotheek/hypotheek.ini
+*.vcxproj.filters

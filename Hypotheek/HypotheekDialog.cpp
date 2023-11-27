@@ -1,12 +1,19 @@
 
-// HypotheekDlg.cpp : implementation file
+// HypotheekDialog.cpp : implementation file
 //
 
 #include "pch.h"
+
 #include "framework.h"
 #include "Hypotheek.h"
-#include "HypotheekDlg.h"
+#include "HypotheekDialog.h"
+
+#include <filesystem>
+
+#include <Utilities/Inifile.h>
+
 #include "afxdialogex.h"
+#include "InvoerDialog.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -46,32 +53,42 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// CHypotheekDlg dialog
+// HypotheekDialog dialog
 
 
 
-CHypotheekDlg::CHypotheekDlg(CWnd* pParent /*=nullptr*/)
+CHypotheekDialog::CHypotheekDialog(Inifile& inifile, CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_HYPOTHEEK_DIALOG, pParent)
+	, mInifile(inifile)
 {
+	mInifile[L"Init"][L"Poepie"] = L"nu";
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
-void CHypotheekDlg::DoDataExchange(CDataExchange* pDX)
+CHypotheekDialog::~CHypotheekDialog()
 {
-	CDialogEx::DoDataExchange(pDX);
+	mInifile.Write();
 }
 
-BEGIN_MESSAGE_MAP(CHypotheekDlg, CDialogEx)
+void CHypotheekDialog::DoDataExchange(CDataExchange* pDX)
+{
+	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_HYPOTHEEK_TAB, mTabControl);
+}
+
+BEGIN_MESSAGE_MAP(CHypotheekDialog, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 END_MESSAGE_MAP()
 
 
-// CHypotheekDlg message handlers
+// HypotheekDialog message handlers
 
-BOOL CHypotheekDlg::OnInitDialog()
+BOOL CHypotheekDialog::OnInitDialog()
 {
+	mTabControl.AddPage(new InvoerDialog(mInifile, this), IDD_INVOER_DIALOG, _T("Invoer"));
+
 	CDialogEx::OnInitDialog();
 
 	// Add "About..." menu item to system menu.
@@ -99,12 +116,13 @@ BOOL CHypotheekDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
-	// TODO: Add extra initialization here
+	mTabControl.Initialize();
+	mTabControl.SelectPage(1);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
-void CHypotheekDlg::OnSysCommand(UINT nID, LPARAM lParam)
+void CHypotheekDialog::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
 	{
@@ -121,7 +139,7 @@ void CHypotheekDlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  to draw the icon.  For MFC applications using the document/view model,
 //  this is automatically done for you by the framework.
 
-void CHypotheekDlg::OnPaint()
+void CHypotheekDialog::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -148,7 +166,7 @@ void CHypotheekDlg::OnPaint()
 
 // The system calls this function to obtain the cursor to display while the user drags
 //  the minimized window.
-HCURSOR CHypotheekDlg::OnQueryDragIcon()
+HCURSOR CHypotheekDialog::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
