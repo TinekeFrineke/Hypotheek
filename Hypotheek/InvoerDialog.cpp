@@ -2,8 +2,10 @@
 //
 
 #include "pch.h"
-#include "Hypotheek.h"
+
 #include "InvoerDialog.h"
+
+#include "Hypotheek.h"
 #include "afxdialogex.h"
 
 #include <Utilities/Inifile.h>
@@ -25,7 +27,12 @@ InvoerDialog::~InvoerDialog()
 
 BOOL InvoerDialog::OnInitDialog()
 {
-    const auto result = CDialogEx::OnInitDialog();
+    return CDialogEx::OnInitDialog();
+}
+
+void InvoerDialog::OnShowWindow(BOOL bShow, UINT nStatus)
+{
+    __super::OnShowWindow(bShow, nStatus);
 
     mKoopsomEdit.SetValue(Str::ToDouble(mInifile[L"invoer"][L"koopsom"]));
     mVerkoopMakelaarEdit.SetValue(Str::ToDouble(mInifile[L"invoer"][L"verkoopmakelaar"]));
@@ -35,8 +42,6 @@ BOOL InvoerDialog::OnInitDialog()
     mNhgEdit.SetValue(Str::ToDouble(mInifile[L"invoer"][L"nhg"]));
     mKoopsomOverigen.SetValue(Str::ToDouble(mInifile[L"invoer"][L"overige"]));
     mNatasjaEigenGeld.SetValue(Str::ToDouble(mInifile[L"invoer"][L"natasja"]));
-
-    return result;
 }
 
 void InvoerDialog::DoDataExchange(CDataExchange* pDX)
@@ -65,6 +70,7 @@ BEGIN_MESSAGE_MAP(InvoerDialog, CDialogEx)
     ON_EN_CHANGE(IDC_OVERIG_EDIT, &InvoerDialog::OnEnChangeOverigEdit)
     ON_EN_CHANGE(IDC_KOSTEN_KOPER_TOTAAL_EDIT, &InvoerDialog::OnEnChangeKostenKoperTotaalEdit)
     ON_EN_CHANGE(IDC_NATASJA_EIGEN_GELD_EDIT, &InvoerDialog::OnEnChangeNatasjaEigenGeldEdit)
+    ON_WM_SHOWWINDOW()
 END_MESSAGE_MAP()
 
 
@@ -84,6 +90,7 @@ void InvoerDialog::HerberekenKoopsomTotaal()
 void InvoerDialog::HerberekenLening()
 {
     mLenen.SetValue(mKoopsomTotaal.GetValue() - mNatasjaEigenGeld.GetValue());
+    mInifile[L"natasja"][L"lening"] = std::to_wstring(mLenen.GetValue());
 }
 
 

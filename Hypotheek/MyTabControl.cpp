@@ -113,7 +113,7 @@ void MyTabControl::SelectPage(int iPage)
 
 void MyTabControl::UpdateSelection()
 {
-	if (m_tabCurrent != GetCurFocus()) {
+//	if (m_tabCurrent != GetCurFocus()) {
     if (m_tabPages[m_tabCurrent].mDialog->CanExit(false))
     {
       m_tabPages[m_tabCurrent].mDialog->GetDialog()->ShowWindow(SW_HIDE);
@@ -125,5 +125,5 @@ void MyTabControl::UpdateSelection()
     {
       SetCurFocus(m_tabCurrent);
     }
-	}
+//	}
 }

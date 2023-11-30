@@ -57,4 +57,5 @@ public:
 	afx_msg void OnEnChangeOverigEdit();
 	afx_msg void OnEnChangeKostenKoperTotaalEdit();
 	afx_msg void OnEnChangeNatasjaEigenGeldEdit();
+	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 };

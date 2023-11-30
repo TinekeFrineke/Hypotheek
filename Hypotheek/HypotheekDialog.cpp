@@ -14,6 +14,7 @@
 
 #include "afxdialogex.h"
 #include "InvoerDialog.h"
+#include "NatasjaLastenDialog.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -88,6 +89,7 @@ END_MESSAGE_MAP()
 BOOL CHypotheekDialog::OnInitDialog()
 {
 	mTabControl.AddPage(new InvoerDialog(mInifile, this), IDD_INVOER_DIALOG, _T("Invoer"));
+	mTabControl.AddPage(new NatasjaLastenDialog(mInifile, this), IDD_LASTEN_NATASJA_DIALOG, _T("Lasten Natasja"));
 
 	CDialogEx::OnInitDialog();
 
@@ -117,7 +119,7 @@ BOOL CHypotheekDialog::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	mTabControl.Initialize();
-	mTabControl.SelectPage(1);
+	mTabControl.SelectPage(0);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
