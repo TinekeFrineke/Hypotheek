@@ -68,6 +68,7 @@ BEGIN_MESSAGE_MAP(NatasjaLastenDialog, CDialog)
     ON_WM_SHOWWINDOW()
     ON_EN_CHANGE(IDC_REST_JAARRENTE_EDIT, &NatasjaLastenDialog::OnEnChangeRestJaarrenteEdit)
     ON_EN_CHANGE(IDC_OPSTALVERZEKERING_EDIT, &NatasjaLastenDialog::OnEnChangeOpstalverzekeringEdit)
+    ON_EN_CHANGE(IDC_JAARRENTE_EDIT, &NatasjaLastenDialog::OnEnChangeJaarrenteEdit)
 END_MESSAGE_MAP()
 
 
@@ -109,6 +110,12 @@ void NatasjaLastenDialog::OnEnChangeErfpachtEdit()
 
 void NatasjaLastenDialog::OnEnChangeOpstalverzekeringEdit()
 {
-    mInifile[L"natasja"][L"opstal"] = std::to_wstring(mErfpacht.GetValue());
+    mInifile[L"natasja"][L"opstal"] = std::to_wstring(mOpstalVerzekeringEdit.GetValue());
     BerekenTotaleLasten();
+}
+
+
+void NatasjaLastenDialog::OnEnChangeJaarrenteEdit()
+{
+    mRestJaarrente.SetValue(mJaarrente.GetValue() - mSchenkingen.GetValue());
 }

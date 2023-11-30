@@ -55,4 +55,5 @@ private:
 	CDoubleEdit mOpstalVerzekeringEdit;
 public:
 	afx_msg void OnEnChangeOpstalverzekeringEdit();
+	afx_msg void OnEnChangeJaarrenteEdit();
 };

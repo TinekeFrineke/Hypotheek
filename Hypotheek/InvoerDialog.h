@@ -38,7 +38,6 @@ private:
 	Inifile& mInifile;
 
 	CDoubleEdit mKoopsomEdit;
-	CDoubleEdit mVerkoopMakelaarEdit;
 	CDoubleEdit mTaxatieEdit;
 	CDoubleEdit mIngEdit;
 	CDoubleEdit mRieksEdit;
@@ -49,7 +48,6 @@ private:
 	CDoubleEdit mLenen;
 public:
 	afx_msg void OnEnChangeKoopsomEdit();
-	afx_msg void OnEnChangeVerkoopMakelaarEdit();
 	afx_msg void OnEnChangeTaxatieEdit();
 	afx_msg void OnEnChangeIngEdit();
 	afx_msg void OnEnChangeRieksEdit();

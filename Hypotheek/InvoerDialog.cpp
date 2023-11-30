@@ -35,7 +35,6 @@ void InvoerDialog::OnShowWindow(BOOL bShow, UINT nStatus)
     __super::OnShowWindow(bShow, nStatus);
 
     mKoopsomEdit.SetValue(Str::ToDouble(mInifile[L"invoer"][L"koopsom"]));
-    mVerkoopMakelaarEdit.SetValue(Str::ToDouble(mInifile[L"invoer"][L"verkoopmakelaar"]));
     mTaxatieEdit.SetValue(Str::ToDouble(mInifile[L"invoer"][L"taxatie"]));
     mIngEdit.SetValue(Str::ToDouble(mInifile[L"invoer"][L"ingadvies"]));
     mRieksEdit.SetValue(Str::ToDouble(mInifile[L"invoer"][L"rieks"]));
@@ -48,7 +47,6 @@ void InvoerDialog::DoDataExchange(CDataExchange* pDX)
 {
     CDialogEx::DoDataExchange(pDX);
     DDX_Control(pDX, IDC_KOOPSOM_EDIT, mKoopsomEdit);
-    DDX_Control(pDX, IDC_VERKOOP_MAKELAAR_EDIT, mVerkoopMakelaarEdit);
     DDX_Control(pDX, IDC_TAXATIE_EDIT, mTaxatieEdit);
     DDX_Control(pDX, IDC_ING_EDIT, mIngEdit);
     DDX_Control(pDX, IDC_RIEKS_EDIT, mRieksEdit);
@@ -62,7 +60,6 @@ void InvoerDialog::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(InvoerDialog, CDialogEx)
     ON_EN_CHANGE(IDC_KOOPSOM_EDIT, &InvoerDialog::OnEnChangeKoopsomEdit)
-    ON_EN_CHANGE(IDC_VERKOOP_MAKELAAR_EDIT, &InvoerDialog::OnEnChangeVerkoopMakelaarEdit)
     ON_EN_CHANGE(IDC_TAXATIE_EDIT, &InvoerDialog::OnEnChangeTaxatieEdit)
     ON_EN_CHANGE(IDC_ING_EDIT, &InvoerDialog::OnEnChangeIngEdit)
     ON_EN_CHANGE(IDC_RIEKS_EDIT, &InvoerDialog::OnEnChangeRieksEdit)
@@ -79,9 +76,7 @@ END_MESSAGE_MAP()
 void InvoerDialog::HerberekenKoopsomTotaal()
 {
     mKoopsomTotaal.SetValue(mKoopsomEdit.GetValue()
-                            + mVerkoopMakelaarEdit.GetValue()
                             + mTaxatieEdit.GetValue()
-                            + mIngEdit.GetValue()
                             + mRieksEdit.GetValue()
                             + mNhgEdit.GetValue()
                             + mKoopsomOverigen.GetValue());
@@ -97,13 +92,6 @@ void InvoerDialog::HerberekenLening()
 void InvoerDialog::OnEnChangeKoopsomEdit()
 {
     mInifile[L"invoer"][L"koopsom"] = std::to_wstring(mKoopsomEdit.GetValue());
-    HerberekenKoopsomTotaal();
-}
-
-
-void InvoerDialog::OnEnChangeVerkoopMakelaarEdit()
-{
-    mInifile[L"invoer"][L"verkoopmakelaar"] = std::to_wstring(mVerkoopMakelaarEdit.GetValue());
     HerberekenKoopsomTotaal();
 }
 

@@ -29,7 +29,6 @@
 #define IDC_EDIT_VVE                    1019
 #define IDC_ERFPACHT_EDIT               1020
 #define IDC_TOTALE_LASTEN_EDIT          1021
-#define IDC_EDIT1                       1022
 #define IDC_OPSTALVERZEKERING_EDIT      1022
 
 // Next default values for new objects
