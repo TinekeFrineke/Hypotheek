@@ -1,5 +1,5 @@
 
-// Hypotheek.h : main header file for the PROJECT_NAME application
+// HypotheekApplication.h : main header file for the PROJECT_NAME application
 //
 
 #pragma once
@@ -16,7 +16,7 @@
 
 
 // HypotheekApplication:
-// See Hypotheek.cpp for the implementation of this class
+// See HypotheekApplication.cpp for the implementation of this class
 //
 
 class HypotheekApplication : public CWinApp

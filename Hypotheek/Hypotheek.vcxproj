@@ -191,7 +191,7 @@
   <ItemGroup>
     <ClInclude Include="DoubleEdit.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="Hypotheek.h" />
+    <ClInclude Include="HypotheekApplication.h" />
     <ClInclude Include="HypotheekDialog.h" />
     <ClInclude Include="InvoerDialog.h" />
     <ClInclude Include="MyTabControl.h" />
@@ -204,7 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DoubleEdit.cpp" />
-    <ClCompile Include="Hypotheek.cpp" />
+    <ClCompile Include="HypotheekApplication.cpp" />
     <ClCompile Include="HypotheekDialog.cpp" />
     <ClCompile Include="InvoerDialog.cpp" />
     <ClCompile Include="MyTabControl.cpp" />

@@ -1,5 +1,5 @@
 
-// Hypotheek.cpp : Defines the class behaviors for the application.
+// HypotheekApplication.cpp : Defines the class behaviors for the application.
 //
 
 #include "pch.h"
@@ -8,7 +8,7 @@
 #include <Utilities/strutils.h>
 
 #include "framework.h"
-#include "Hypotheek.h"
+#include "HypotheekApplication.h"
 #include "HypotheekDialog.h"
 
 #ifdef _DEBUG

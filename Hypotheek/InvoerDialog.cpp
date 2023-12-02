@@ -5,7 +5,7 @@
 
 #include "InvoerDialog.h"
 
-#include "Hypotheek.h"
+#include "HypotheekApplication.h"
 #include "afxdialogex.h"
 
 #include <Utilities/Inifile.h>

@@ -5,7 +5,7 @@
 #include "pch.h"
 
 #include "framework.h"
-#include "Hypotheek.h"
+#include "HypotheekApplication.h"
 #include "HypotheekDialog.h"
 
 #include <filesystem>

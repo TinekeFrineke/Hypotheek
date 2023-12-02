@@ -2,13 +2,13 @@
 //
 
 #include "pch.h"
-#include "Hypotheek.h"
-#include "NatasjaLastenDialog.h"
+
 #include <Utilities/Inifile.h>
 #include <Utilities/strutils.h>
 
 #include "afxdialogex.h"
-#include "Hypotheek.h"
+#include "HypotheekApplication.h"
+#include "NatasjaLastenDialog.h"
 
 
 // NatasjaLastenDialog dialog
