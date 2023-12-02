@@ -13,7 +13,7 @@ class CHypotheekDialog : public CDialogEx
 {
 // Construction
 public:
-	CHypotheekDialog(Inifile& inifile, CWnd* pParent = nullptr);	// standard constructor
+	CHypotheekDialog(HypotheekApplication& application, Inifile& inifile, CWnd* pParent = nullptr);	// standard constructor
 	~CHypotheekDialog();
 
 // Dialog Data
@@ -37,6 +37,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 private:
+	HypotheekApplication& mApplication;
 	MyTabControl mTabControl;
 	Inifile& mInifile;
 };

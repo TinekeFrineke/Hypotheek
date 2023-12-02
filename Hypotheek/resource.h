@@ -30,6 +30,11 @@
 #define IDC_ERFPACHT_EDIT               1020
 #define IDC_TOTALE_LASTEN_EDIT          1021
 #define IDC_OPSTALVERZEKERING_EDIT      1022
+#define IDC_PAND_COMBO                  1024
+#define IDC_SAVE_BUTTON                 1027
+#define IDC_DELETE_BUTTON2              1028
+#define IDC_DELETE_BUTTON               1028
+#define IDC_NOTARIS_EDIT                1029
 
 // Next default values for new objects
 // 
@@ -37,7 +42,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        136
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1023
+#define _APS_NEXT_CONTROL_VALUE         1030
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

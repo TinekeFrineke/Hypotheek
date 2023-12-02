@@ -15,8 +15,9 @@
 
 IMPLEMENT_DYNAMIC(InvoerDialog, CDialogEx)
 
-InvoerDialog::InvoerDialog(Inifile& inifile, CWnd* pParent /*=nullptr*/)
+InvoerDialog::InvoerDialog(HypotheekApplication& app, Inifile& inifile, CWnd* pParent /*=nullptr*/)
     : CDialogEx(IDD_INVOER_DIALOG, pParent)
+    , mApplication(app)
     , mInifile(inifile)
 {
 }
@@ -34,13 +35,7 @@ void InvoerDialog::OnShowWindow(BOOL bShow, UINT nStatus)
 {
     __super::OnShowWindow(bShow, nStatus);
 
-    mKoopsomEdit.SetValue(Str::ToDouble(mInifile[L"invoer"][L"koopsom"]));
-    mTaxatieEdit.SetValue(Str::ToDouble(mInifile[L"invoer"][L"taxatie"]));
-    mIngEdit.SetValue(Str::ToDouble(mInifile[L"invoer"][L"ingadvies"]));
-    mRieksEdit.SetValue(Str::ToDouble(mInifile[L"invoer"][L"rieks"]));
-    mNhgEdit.SetValue(Str::ToDouble(mInifile[L"invoer"][L"nhg"]));
-    mKoopsomOverigen.SetValue(Str::ToDouble(mInifile[L"invoer"][L"overige"]));
-    mNatasjaEigenGeld.SetValue(Str::ToDouble(mInifile[L"invoer"][L"natasja"]));
+    VulDialoog();
 }
 
 void InvoerDialog::DoDataExchange(CDataExchange* pDX)
@@ -55,6 +50,8 @@ void InvoerDialog::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_KOSTEN_KOPER_TOTAAL_EDIT, mKoopsomTotaal);
     DDX_Control(pDX, IDC_NATASJA_EIGEN_GELD_EDIT, mNatasjaEigenGeld);
     DDX_Control(pDX, IDC_LENEN_EDIT, mLenen);
+    DDX_Control(pDX, IDC_NOTARIS_EDIT, mNotarisEdit);
+    DDX_Control(pDX, IDC_PAND_COMBO, mPandCombo);
 }
 
 
@@ -68,30 +65,68 @@ BEGIN_MESSAGE_MAP(InvoerDialog, CDialogEx)
     ON_EN_CHANGE(IDC_KOSTEN_KOPER_TOTAAL_EDIT, &InvoerDialog::OnEnChangeKostenKoperTotaalEdit)
     ON_EN_CHANGE(IDC_NATASJA_EIGEN_GELD_EDIT, &InvoerDialog::OnEnChangeNatasjaEigenGeldEdit)
     ON_WM_SHOWWINDOW()
+    ON_EN_CHANGE(IDC_NOTARIS_EDIT, &InvoerDialog::OnEnChangeNotarisEdit)
+    ON_BN_CLICKED(IDC_SAVE_BUTTON, &InvoerDialog::OnBnClickedSaveButton)
+    ON_BN_CLICKED(IDC_DELETE_BUTTON, &InvoerDialog::OnBnClickedDeleteButton)
 END_MESSAGE_MAP()
 
 
 // InvoerDialog message handlers
 
+std::wstring InvoerDialog::GetPand() const
+{
+    return mApplication.GetPand();
+}
+
 void InvoerDialog::HerberekenKoopsomTotaal()
 {
     mKoopsomTotaal.SetValue(mKoopsomEdit.GetValue()
                             + mTaxatieEdit.GetValue()
-                            + mRieksEdit.GetValue()
                             + mNhgEdit.GetValue()
+                            + mNotarisEdit.GetValue()
                             + mKoopsomOverigen.GetValue());
 }
 
 void InvoerDialog::HerberekenLening()
 {
     mLenen.SetValue(mKoopsomTotaal.GetValue() - mNatasjaEigenGeld.GetValue());
-    mInifile[L"natasja"][L"lening"] = std::to_wstring(mLenen.GetValue());
+    mInifile[GetPand()][L"lening"] = std::to_wstring(mLenen.GetValue());
+}
+
+void InvoerDialog::VulPandCombo()
+{
+    mPandCombo.Clear();
+    for (auto pand : mApplication.GetPanden())
+        mPandCombo.AddString(pand.c_str());
+}
+
+void InvoerDialog::VulDialoog()
+{
+    VulPandCombo();
+
+    mPandCombo.SelectString(0, mApplication.GetPand().c_str());
+
+    mKoopsomEdit.SetValue(Str::ToDouble(mInifile[GetPand()][L"koopsom"]));
+    mTaxatieEdit.SetValue(Str::ToDouble(mInifile[L"invoer"][L"taxatie"]));
+    mIngEdit.SetValue(Str::ToDouble(mInifile[L"invoer"][L"ingadvies"]));
+    mRieksEdit.SetValue(Str::ToDouble(mInifile[L"invoer"][L"rieks"]));
+    mNotarisEdit.SetValue(Str::ToDouble(mInifile[L"invoer"][L"notaris"]));
+    mNhgEdit.SetValue(Str::ToDouble(mInifile[GetPand()][L"nhg"]));
+    mKoopsomOverigen.SetValue(Str::ToDouble(mInifile[GetPand()][L"overige"]));
+    mNatasjaEigenGeld.SetValue(Str::ToDouble(mInifile[L"invoer"][L"natasja"]));
+}
+
+void InvoerDialog::BewaarDialoog()
+{
+    mInifile[GetPand()][L"koopsom"] = std::to_wstring(mKoopsomEdit.GetValue());
+    mInifile[GetPand()][L"nhg"] = std::to_wstring(mNhgEdit.GetValue());
+    mInifile[GetPand()][L"overige"] = std::to_wstring(mKoopsomOverigen.GetValue());
 }
 
 
 void InvoerDialog::OnEnChangeKoopsomEdit()
 {
-    mInifile[L"invoer"][L"koopsom"] = std::to_wstring(mKoopsomEdit.GetValue());
+    mInifile[GetPand()][L"koopsom"] = std::to_wstring(mKoopsomEdit.GetValue());
     HerberekenKoopsomTotaal();
 }
 
@@ -113,20 +148,19 @@ void InvoerDialog::OnEnChangeIngEdit()
 void InvoerDialog::OnEnChangeRieksEdit()
 {
     mInifile[L"invoer"][L"rieks"] = std::to_wstring(mRieksEdit.GetValue());
-    HerberekenKoopsomTotaal();
 }
 
 
 void InvoerDialog::OnEnChangeNhgEdit()
 {
-    mInifile[L"invoer"][L"nhg"] = std::to_wstring(mNhgEdit.GetValue());
+    mInifile[GetPand()][L"nhg"] = std::to_wstring(mNhgEdit.GetValue());
     HerberekenKoopsomTotaal();
 }
 
 
 void InvoerDialog::OnEnChangeOverigEdit()
 {
-    mInifile[L"invoer"][L"overige"] = std::to_wstring(mKoopsomOverigen.GetValue());
+    mInifile[GetPand()][L"overige"] = std::to_wstring(mKoopsomOverigen.GetValue());
     HerberekenKoopsomTotaal();
 }
 
@@ -141,4 +175,28 @@ void InvoerDialog::OnEnChangeNatasjaEigenGeldEdit()
 {
     mInifile[L"invoer"][L"natasja"] = std::to_wstring(mNatasjaEigenGeld.GetValue());
     HerberekenLening();
+}
+
+
+void InvoerDialog::OnEnChangeNotarisEdit()
+{
+    mInifile[L"invoer"][L"notaris"] = std::to_wstring(mNotarisEdit.GetValue());
+    HerberekenKoopsomTotaal();
+}
+
+
+void InvoerDialog::OnBnClickedSaveButton()
+{
+    CString pand;
+    mPandCombo.GetWindowText(pand);
+    mApplication.SetPand((const wchar_t*)pand);
+    VulDialoog();
+}
+
+
+void InvoerDialog::OnBnClickedDeleteButton()
+{
+    CString pand;
+    mPandCombo.GetWindowText(pand);
+    mApplication.DeletePand(pand.GetBuffer());
 }

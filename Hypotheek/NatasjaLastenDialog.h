@@ -14,7 +14,7 @@ class NatasjaLastenDialog
 	DECLARE_DYNAMIC(NatasjaLastenDialog)
 
 public:
-	NatasjaLastenDialog(Inifile& inifile, CWnd* pParent = nullptr);   // standard constructor
+	NatasjaLastenDialog(HypotheekApplication& application, Inifile& inifile, CWnd* pParent = nullptr);   // standard constructor
 	virtual ~NatasjaLastenDialog();
 
 	virtual CDialog* GetDialog() override {
@@ -56,4 +56,6 @@ private:
 public:
 	afx_msg void OnEnChangeOpstalverzekeringEdit();
 	afx_msg void OnEnChangeJaarrenteEdit();
+
+	HypotheekApplication& mApplication;
 };

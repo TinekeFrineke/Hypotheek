@@ -15,8 +15,9 @@
 
 IMPLEMENT_DYNAMIC(NatasjaLastenDialog, CDialog)
 
-NatasjaLastenDialog::NatasjaLastenDialog(Inifile& inifile, CWnd* pParent /*=nullptr*/)
+NatasjaLastenDialog::NatasjaLastenDialog(HypotheekApplication& application, Inifile& inifile, CWnd* pParent /*=nullptr*/)
     : CDialog(IDD_LASTEN_NATASJA_DIALOG, pParent)
+    , mApplication(application)
     , mInifile(inifile)
 {
 
@@ -31,11 +32,11 @@ void NatasjaLastenDialog::OnShowWindow(BOOL bShow, UINT nStatus)
 {
     __super::OnShowWindow(bShow, nStatus);
 
-    mLening.SetValue(Str::ToDouble(mInifile[L"natasja"][L"lening"]));
+    mLening.SetValue(Str::ToDouble(mInifile[mApplication.GetPand()][L"lening"]));
     mRentePercentage.SetValue(Str::ToDouble(mInifile[L"natasja"][L"rentepercentage"]));
     mSchenkingen.SetValue(Str::ToDouble(mInifile[L"natasja"][L"schenkingen"]));
-    mVve.SetValue(Str::ToDouble(mInifile[L"natasja"][L"vve"]));
-    mErfpacht.SetValue(Str::ToDouble(mInifile[L"natasja"][L"erfpacht"]));
+    mVve.SetValue(Str::ToDouble(mInifile[mApplication.GetPand()][L"vve"]));
+    mErfpacht.SetValue(Str::ToDouble(mInifile[mApplication.GetPand()][L"erfpacht"]));
     mOpstalVerzekeringEdit.SetValue(Str::ToDouble(mInifile[L"natasja"][L"opstal"]));
 }
 
@@ -97,14 +98,14 @@ void NatasjaLastenDialog::OnEnChangeRestJaarrenteEdit()
 
 void NatasjaLastenDialog::OnEnChangeEditVve()
 {
-    mInifile[L"natasja"][L"vve"] = std::to_wstring(mVve.GetValue());
+    mInifile[mApplication.GetPand()][L"vve"] = std::to_wstring(mVve.GetValue());
     BerekenTotaleLasten();
 }
 
 
 void NatasjaLastenDialog::OnEnChangeErfpachtEdit()
 {
-    mInifile[L"natasja"][L"erfpacht"] = std::to_wstring(mErfpacht.GetValue());
+    mInifile[mApplication.GetPand()][L"erfpacht"] = std::to_wstring(mErfpacht.GetValue());
     BerekenTotaleLasten();
 }
 

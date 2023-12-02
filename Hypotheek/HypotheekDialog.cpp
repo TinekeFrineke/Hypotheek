@@ -58,11 +58,11 @@ END_MESSAGE_MAP()
 
 
 
-CHypotheekDialog::CHypotheekDialog(Inifile& inifile, CWnd* pParent /*=nullptr*/)
+CHypotheekDialog::CHypotheekDialog(HypotheekApplication& application, Inifile& inifile, CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_HYPOTHEEK_DIALOG, pParent)
+	, mApplication(application)
 	, mInifile(inifile)
 {
-	mInifile[L"Init"][L"Poepie"] = L"nu";
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
@@ -88,8 +88,8 @@ END_MESSAGE_MAP()
 
 BOOL CHypotheekDialog::OnInitDialog()
 {
-	mTabControl.AddPage(new InvoerDialog(mInifile, this), IDD_INVOER_DIALOG, _T("Invoer"));
-	mTabControl.AddPage(new NatasjaLastenDialog(mInifile, this), IDD_LASTEN_NATASJA_DIALOG, _T("Lasten Natasja"));
+	mTabControl.AddPage(new InvoerDialog(mApplication, mInifile, this), IDD_INVOER_DIALOG, _T("Invoer"));
+	mTabControl.AddPage(new NatasjaLastenDialog(mApplication, mInifile, this), IDD_LASTEN_NATASJA_DIALOG, _T("Lasten Natasja"));
 
 	CDialogEx::OnInitDialog();
 

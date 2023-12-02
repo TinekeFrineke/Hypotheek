@@ -23,9 +23,14 @@ BEGIN_MESSAGE_MAP(HypotheekApplication, CWinApp)
 END_MESSAGE_MAP()
 
 
+namespace {
+const std::wstring unspecifiedPand(L"<unspecified>");
+}
+
 // HypotheekApplication construction
 
 HypotheekApplication::HypotheekApplication()
+	: mInifile(GetCurrentDir() + _T("\\hypotheek.ini"))
 {
 	// support Restart Manager
 	m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_RESTART;
@@ -56,6 +61,7 @@ BOOL HypotheekApplication::InitInstance()
 
 	CWinApp::InitInstance();
 
+	VulPandenUitInifile();
 
 	AfxEnableControlContainer();
 
@@ -66,12 +72,7 @@ BOOL HypotheekApplication::InitInstance()
 	// Activate "Windows Native" visual manager for enabling themes in MFC controls
 	CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerWindows));
 
-	TCHAR dir[MAX_PATH];
-	GetCurrentDirectory(MAX_PATH, dir);
-
-	Inifile inifile(std::tstring(dir) + _T("\\hypotheek.ini"));
-
-	CHypotheekDialog dlg(inifile);
+	CHypotheekDialog dlg(*this, mInifile);
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
 	if (nResponse == IDOK)
@@ -90,7 +91,7 @@ BOOL HypotheekApplication::InitInstance()
 		TRACE(traceAppMsg, 0, "Warning: if you are using MFC controls on the dialog, you cannot #define _AFX_NO_MFC_CONTROLS_IN_DIALOGS.\n");
 	}
 
-	inifile.Write();
+	mInifile.Write();
 
 	// Delete the shell manager created above.
 	if (pShellManager != nullptr)
@@ -107,3 +108,73 @@ BOOL HypotheekApplication::InitInstance()
 	return FALSE;
 }
 
+std::wstring HypotheekApplication::GetPand() const
+{
+	return mPand;
+}
+
+std::vector<std::wstring> HypotheekApplication::GetPanden() const
+{
+	return mPanden;
+}
+
+void HypotheekApplication::SetPand(const std::wstring& pand)
+{
+	mPand = pand;
+	auto pandIter(std::find(mPanden.begin(), mPanden.end(), pand));
+	if (pandIter == mPanden.end())
+		mPanden.emplace_back(pand);
+
+	PandenToInifile();
+}
+
+void HypotheekApplication::DeletePand(const std::wstring& pand)
+{
+	if (pand == unspecifiedPand)
+		return;
+
+	auto pandIter(std::find(mPanden.begin(), mPanden.end(), pand));
+	if (pandIter != mPanden.end()) {
+		if (pand == mPand)
+			if (pandIter != mPanden.begin())
+				mPand = *(pandIter - 1);
+			else if (pandIter != mPanden.end() - 1)
+				mPand = *(pandIter + 1);
+			else
+				mPand = unspecifiedPand;
+		mPanden.erase(pandIter);
+	}
+
+	PandenToInifile();
+}
+
+std::wstring HypotheekApplication::GetCurrentDir() const
+{
+	TCHAR dir[MAX_PATH];
+	GetCurrentDirectory(MAX_PATH, dir);
+	return dir;
+}
+
+void HypotheekApplication::VulPandenUitInifile()
+{
+	mPand = mInifile[L"panden"][L"huidigpand"];
+	if (mPand.empty())
+		mPand = unspecifiedPand;
+
+	for (auto pand : mInifile[L"panden"])
+		mPanden.push_back(pand.second);
+
+	auto pandIter(std::find(mPanden.begin(), mPanden.end(), unspecifiedPand));
+	if (pandIter == mPanden.end())
+		mPanden.insert(mPanden.begin(), unspecifiedPand);
+
+}
+
+void HypotheekApplication::PandenToInifile()
+{
+	mInifile[L"panden"].Clear();
+	for (size_t i = 0; i < mPanden.size(); ++i)
+		mInifile[L"panden"][L"pand" + std::to_wstring(i)] = mPanden[i];
+
+	mInifile[L"panden"][L"huidigpand"] = mPand;
+}

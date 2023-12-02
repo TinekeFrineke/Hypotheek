@@ -8,7 +8,11 @@
 	#error "include 'pch.h' before including this file for PCH"
 #endif
 
+#include <string>
+#include <vector>
 #include "resource.h"		// main symbols
+
+#include <Utilities/Inifile.h>
 
 
 // HypotheekApplication:
@@ -24,9 +28,23 @@ public:
 public:
 	virtual BOOL InitInstance();
 
-// Implementation
+	std::wstring GetPand() const;
+	std::vector<std::wstring> GetPanden() const;
+	void SetPand(const std::wstring& pand);
+	void DeletePand(const std::wstring& pand);
+
+	// Implementation
 
 	DECLARE_MESSAGE_MAP()
+
+private:
+	std::wstring GetCurrentDir() const;
+	void VulPandenUitInifile();
+	void PandenToInifile();
+
+	Inifile mInifile;
+	std::vector<std::wstring> mPanden;
+	std::wstring mPand;
 };
 
 extern HypotheekApplication theApp;
