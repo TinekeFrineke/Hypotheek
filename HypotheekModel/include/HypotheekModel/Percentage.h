@@ -1,0 +1,30 @@
+#pragma once
+
+#include <string>
+
+namespace Finance {
+class Bedrag;
+}
+
+namespace Hypotheek {
+
+class Percentage
+{
+public:
+    Percentage();
+    Percentage(double percentage);
+    explicit Percentage(const std::wstring& aBedrag);
+
+    double PercentageOf(double value) const;
+    Finance::Bedrag PercentageOf(const Finance::Bedrag& value) const;
+
+    double            GetPercentage() const;
+    std::wstring      ToWString() const;
+
+    Percentage& operator=(double percentage);
+
+private:
+    double mPercentage;
+};
+
+} // namespace Hypotheek

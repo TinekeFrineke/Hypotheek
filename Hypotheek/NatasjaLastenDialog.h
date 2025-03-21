@@ -5,6 +5,8 @@
 
 class Inifile;
 
+class IHypotheek;
+
 // NatasjaLastenDialog dialog
 
 class NatasjaLastenDialog
@@ -58,4 +60,13 @@ public:
 	afx_msg void OnEnChangeJaarrenteEdit();
 
 	HypotheekApplication& mApplication;
+	std::shared_ptr<IHypotheek> mHypotheek;
+	afx_msg void OnBnClickedRadioAnnuitair();
+	afx_msg void OnBnClickedRadioAflossingsvrij();
+	CButton mRadioAnnuitair;
+	CButton mRadioAflossingsvrij;
+private:
+	CEdit mStartDatum;
+public:
+	afx_msg void OnEnKillfocusEditStartdatum();
 };
