@@ -35,13 +35,13 @@ Percentage Hypotheek::EffectieveMaandRente() const
     return std::pow(1 + (mRentePercentage.GetPercentage() / 12), 12);
 }
 
-std::shared_ptr<IHypotheek> CreateHypotheek(HYPOTHEEK_VORM vorm)
+std::unique_ptr<IHypotheek> CreateHypotheek(HYPOTHEEK_VORM vorm)
 {
     switch (vorm) {
     case HYPOTHEEK_VORM::Aflossingsvrij:
-        return std::make_shared<AflossingsvrijeHypotheek>();
+        return std::make_unique<AflossingsvrijeHypotheek>();
     case HYPOTHEEK_VORM::Annuitair:
-        return std::make_shared<AnnuitaireHypotheek>();
+        return std::make_unique<AnnuitaireHypotheek>();
     }
 
     throw std::runtime_error("Hypotheek::CreateHypotheek: Invalid parameter " + std::to_string(int(vorm)));

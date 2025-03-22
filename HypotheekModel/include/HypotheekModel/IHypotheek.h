@@ -34,6 +34,6 @@ namespace Hypotheek
 
 enum class HYPOTHEEK_VORM;
 
-std::shared_ptr<IHypotheek> CreateHypotheek(HYPOTHEEK_VORM vorm);
+std::unique_ptr<IHypotheek> CreateHypotheek(HYPOTHEEK_VORM vorm);
 
 }

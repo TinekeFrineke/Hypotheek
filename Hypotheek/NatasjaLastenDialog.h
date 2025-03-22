@@ -1,11 +1,11 @@
 #pragma once
 
 #include "DoubleEdit.h"
+#include "resource.h"
 #include "TabPage.h"
 
 class Inifile;
-
-class IHypotheek;
+class IHypotheekOwner;
 
 // NatasjaLastenDialog dialog
 
@@ -16,7 +16,7 @@ class NatasjaLastenDialog
 	DECLARE_DYNAMIC(NatasjaLastenDialog)
 
 public:
-	NatasjaLastenDialog(HypotheekApplication& application, Inifile& inifile, CWnd* pParent = nullptr);   // standard constructor
+	NatasjaLastenDialog(std::shared_ptr<IHypotheekOwner> hypotheek, Inifile& inifile, CWnd* pParent = nullptr);   // standard constructor
 	virtual ~NatasjaLastenDialog();
 
 	virtual CDialog* GetDialog() override {
@@ -35,8 +35,6 @@ protected:
 private:
 	void BerekenTotaleLasten();
 
-	Inifile& mInifile;
-
 	CDoubleEdit mLening;
 	CDoubleEdit mRentePercentage;
 	CDoubleEdit mJaarrente;
@@ -53,20 +51,19 @@ public:
 	afx_msg void OnEnChangeErfpachtEdit();
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 	afx_msg void OnEnChangeRestJaarrenteEdit();
-private:
-	CDoubleEdit mOpstalVerzekeringEdit;
-public:
 	afx_msg void OnEnChangeOpstalverzekeringEdit();
 	afx_msg void OnEnChangeJaarrenteEdit();
-
-	HypotheekApplication& mApplication;
-	std::shared_ptr<IHypotheek> mHypotheek;
 	afx_msg void OnBnClickedRadioAnnuitair();
 	afx_msg void OnBnClickedRadioAflossingsvrij();
+	afx_msg void OnEnKillfocusEditStartdatum();
+
+private:
+	CDoubleEdit mOpstalVerzekeringEdit;
 	CButton mRadioAnnuitair;
 	CButton mRadioAflossingsvrij;
-private:
 	CEdit mStartDatum;
-public:
-	afx_msg void OnEnKillfocusEditStartdatum();
+
+	//HypotheekApplication& mApplication;
+	Inifile& mInifile;
+	std::shared_ptr<IHypotheekOwner> m_hypotheek;
 };

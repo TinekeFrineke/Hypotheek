@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include "IHypotheekOwner.h"
 #include "InvoerDialog.h"
 
 #include "HypotheekApplication.h"
@@ -15,9 +16,9 @@
 
 IMPLEMENT_DYNAMIC(InvoerDialog, CDialogEx)
 
-InvoerDialog::InvoerDialog(HypotheekApplication& app, Inifile& inifile, CWnd* pParent /*=nullptr*/)
+InvoerDialog::InvoerDialog(std::shared_ptr<IHypotheekOwner> hypotheek, Inifile& inifile, CWnd* pParent /*=nullptr*/)
     : CDialogEx(IDD_INVOER_DIALOG, pParent)
-    , mApplication(app)
+    , m_hypotheek(hypotheek)
     , mInifile(inifile)
 {
 }
@@ -75,7 +76,7 @@ END_MESSAGE_MAP()
 
 std::wstring InvoerDialog::GetPand() const
 {
-    return mApplication.GetPand();
+    return m_hypotheek->GetPand();
 }
 
 void InvoerDialog::HerberekenKoopsomTotaal()
@@ -96,7 +97,7 @@ void InvoerDialog::HerberekenLening()
 void InvoerDialog::VulPandCombo()
 {
     mPandCombo.Clear();
-    for (auto pand : mApplication.GetPanden())
+    for (auto pand : m_hypotheek->GetPanden())
         mPandCombo.AddString(pand.c_str());
 }
 
@@ -104,7 +105,7 @@ void InvoerDialog::VulDialoog()
 {
     VulPandCombo();
 
-    mPandCombo.SelectString(0, mApplication.GetPand().c_str());
+    mPandCombo.SelectString(0, m_hypotheek->GetPand().c_str());
 
     mKoopsomEdit.SetValue(Str::ToDouble(mInifile[GetPand()][L"koopsom"]));
     mTaxatieEdit.SetValue(Str::ToDouble(mInifile[L"invoer"][L"taxatie"]));
@@ -189,7 +190,7 @@ void InvoerDialog::OnBnClickedSaveButton()
 {
     CString pand;
     mPandCombo.GetWindowText(pand);
-    mApplication.SetPand((const wchar_t*)pand);
+    m_hypotheek->SetPand((const wchar_t*)pand);
     VulDialoog();
 }
 
@@ -198,5 +199,5 @@ void InvoerDialog::OnBnClickedDeleteButton()
 {
     CString pand;
     mPandCombo.GetWindowText(pand);
-    mApplication.DeletePand(pand.GetBuffer());
+    m_hypotheek->DeletePand(pand.GetBuffer());
 }

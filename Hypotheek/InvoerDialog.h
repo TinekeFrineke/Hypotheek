@@ -17,7 +17,7 @@ class InvoerDialog
 	DECLARE_DYNAMIC(InvoerDialog)
 
 public:
-	InvoerDialog(HypotheekApplication& application, Inifile& inifile, CWnd* pParent = nullptr);   // standard constructor
+	InvoerDialog(std::shared_ptr<IHypotheekOwner> hypotheek, Inifile& inifile, CWnd* pParent = nullptr);   // standard constructor
 	virtual ~InvoerDialog();
 
 	virtual BOOL OnInitDialog() override;
@@ -69,7 +69,8 @@ private:
 	CDoubleEdit mLenen;
 	CDoubleEdit mNotarisEdit;
 
-	HypotheekApplication& mApplication;
+	//HypotheekApplication& mApplication;
+	std::shared_ptr<IHypotheekOwner> m_hypotheek;
 	CComboBox mPandCombo;
 public:
 	afx_msg void OnBnClickedDeleteButton();

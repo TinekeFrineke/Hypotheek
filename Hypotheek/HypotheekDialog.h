@@ -4,8 +4,11 @@
 
 #pragma once
 
+#include <memory>
+
 #include "MyTabControl.h"
 
+class HypotheekOwner;
 class Inifile;
 
 // CHypotheekDialog dialog
@@ -13,8 +16,8 @@ class CHypotheekDialog : public CDialogEx
 {
 // Construction
 public:
-	CHypotheekDialog(HypotheekApplication& application, Inifile& inifile, CWnd* pParent = nullptr);	// standard constructor
-	~CHypotheekDialog();
+	CHypotheekDialog(HypotheekApplication& application, Inifile& inifile, CWnd* pParent = nullptr);
+	~CHypotheekDialog() override;
 
 // Dialog Data
 #ifdef AFX_DESIGN_TIME
@@ -37,7 +40,11 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 private:
+	std::shared_ptr<HypotheekOwner> m_hypotheekOwner;
+
 	HypotheekApplication& mApplication;
 	MyTabControl mTabControl;
 	Inifile& mInifile;
+public:
+	afx_msg void OnDestroy();
 };

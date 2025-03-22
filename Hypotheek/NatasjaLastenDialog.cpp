@@ -11,7 +11,7 @@
 #include <Utilities/strutils.h>
 
 #include "afxdialogex.h"
-#include "HypotheekApplication.h"
+#include "IHypotheekOwner.h"
 #include "NatasjaLastenDialog.h"
 
 
@@ -19,9 +19,9 @@
 
 IMPLEMENT_DYNAMIC(NatasjaLastenDialog, CDialog)
 
-NatasjaLastenDialog::NatasjaLastenDialog(HypotheekApplication& application, Inifile& inifile, CWnd* pParent /*=nullptr*/)
+NatasjaLastenDialog::NatasjaLastenDialog(std::shared_ptr<IHypotheekOwner> owner, Inifile& inifile, CWnd* pParent /*=nullptr*/)
     : CDialog(IDD_LASTEN_NATASJA_DIALOG, pParent)
-    , mApplication(application)
+    , m_hypotheek(owner)
     , mInifile(inifile)
 {
 }
@@ -37,14 +37,14 @@ void NatasjaLastenDialog::OnShowWindow(BOOL bShow, UINT nStatus)
 
     if (mInifile[L"natasja"][L"vorm"] == L"Annuitair") {
         mRadioAnnuitair.SetCheck(BST_CHECKED);
-        mHypotheek = Hypotheek::CreateHypotheek(Hypotheek::HYPOTHEEK_VORM::Annuitair);
+        m_hypotheek->setHypotheek(Hypotheek::CreateHypotheek(Hypotheek::HYPOTHEEK_VORM::Annuitair));
     }
     else {
         mRadioAflossingsvrij.SetCheck(BST_CHECKED);
-        mHypotheek = Hypotheek::CreateHypotheek(Hypotheek::HYPOTHEEK_VORM::Aflossingsvrij);
+        m_hypotheek->setHypotheek(Hypotheek::CreateHypotheek(Hypotheek::HYPOTHEEK_VORM::Aflossingsvrij));
     }
 
-    mLening.SetValue(Str::ToDouble(mInifile[mApplication.GetPand()][L"lening"]));
+    mLening.SetValue(Str::ToDouble(mInifile[m_hypotheek->GetPand()][L"lening"]));
     std::wstring dateString = mInifile[L"natasja"][L"start"];
     mStartDatum.SetWindowText(dateString.c_str());
     Utils::Date startDate(Utils::Now());
@@ -56,13 +56,13 @@ void NatasjaLastenDialog::OnShowWindow(BOOL bShow, UINT nStatus)
     mRentePercentage.SetValue(Str::ToDouble(mInifile[L"natasja"][L"rentepercentage"]));
 
     mSchenkingen.SetValue(Str::ToDouble(mInifile[L"natasja"][L"schenkingen"]));
-    mHypotheek->SetHypotheekBedrag(Finance::Bedrag(mLening.GetValue()));
-    mHypotheek->SetRentePercentage(mRentePercentage.GetValue());
-    mHypotheek->SetStartDate(startDate);
-    mJaarrente.SetValue(mHypotheek->GetJaarPremie().ToDouble());
+    m_hypotheek->SetHypotheekBedrag(Finance::Bedrag(mLening.GetValue()));
+    m_hypotheek->SetRentePercentage(mRentePercentage.GetValue());
+    m_hypotheek->SetStartDate(startDate);
+    mJaarrente.SetValue(m_hypotheek->GetJaarPremie().ToDouble());
 
-    mVve.SetValue(Str::ToDouble(mInifile[mApplication.GetPand()][L"vve"]));
-    mErfpacht.SetValue(Str::ToDouble(mInifile[mApplication.GetPand()][L"erfpacht"]));
+    mVve.SetValue(Str::ToDouble(mInifile[m_hypotheek->GetPand()][L"vve"]));
+    mErfpacht.SetValue(Str::ToDouble(mInifile[m_hypotheek->GetPand()][L"erfpacht"]));
     mOpstalVerzekeringEdit.SetValue(Str::ToDouble(mInifile[L"natasja"][L"opstal"]));
 }
 
@@ -111,8 +111,8 @@ END_MESSAGE_MAP()
 void NatasjaLastenDialog::OnEnChangeRentePercentageEdit()
 {
     mInifile[L"natasja"][L"rentepercentage"] = std::to_wstring(mRentePercentage.GetValue());
-    mHypotheek->SetRentePercentage(mRentePercentage.GetValue());
-    mJaarrente.SetValue(mHypotheek->GetJaarPremie().ToDouble());
+    m_hypotheek->SetRentePercentage(mRentePercentage.GetValue());
+    mJaarrente.SetValue(m_hypotheek->GetJaarPremie().ToDouble());
 }
 
 
@@ -131,14 +131,14 @@ void NatasjaLastenDialog::OnEnChangeRestJaarrenteEdit()
 
 void NatasjaLastenDialog::OnEnChangeEditVve()
 {
-    mInifile[mApplication.GetPand()][L"vve"] = std::to_wstring(mVve.GetValue());
+    mInifile[m_hypotheek->GetPand()][L"vve"] = std::to_wstring(mVve.GetValue());
     BerekenTotaleLasten();
 }
 
 
 void NatasjaLastenDialog::OnEnChangeErfpachtEdit()
 {
-    mInifile[mApplication.GetPand()][L"erfpacht"] = std::to_wstring(mErfpacht.GetValue());
+    mInifile[m_hypotheek->GetPand()][L"erfpacht"] = std::to_wstring(mErfpacht.GetValue());
     BerekenTotaleLasten();
 }
 
@@ -158,22 +158,22 @@ void NatasjaLastenDialog::OnEnChangeJaarrenteEdit()
 void NatasjaLastenDialog::OnBnClickedRadioAnnuitair()
 {
     mInifile[L"natasja"][L"vorm"] = L"Annuitair";
-    mHypotheek = Hypotheek::CreateHypotheek(Hypotheek::HYPOTHEEK_VORM::Annuitair);
-    mHypotheek->SetHypotheekBedrag(Finance::Bedrag(mLening.GetValue()));
-    mHypotheek->SetRentePercentage(mRentePercentage.GetValue());
+    m_hypotheek->setHypotheek(Hypotheek::CreateHypotheek(Hypotheek::HYPOTHEEK_VORM::Annuitair));
+    m_hypotheek->SetHypotheekBedrag(Finance::Bedrag(mLening.GetValue()));
+    m_hypotheek->SetRentePercentage(mRentePercentage.GetValue());
 
-    mJaarrente.SetValue(mHypotheek->GetJaarPremie().ToDouble());
+    mJaarrente.SetValue(m_hypotheek->GetJaarPremie().ToDouble());
 }
 
 
 void NatasjaLastenDialog::OnBnClickedRadioAflossingsvrij()
 {
     mInifile[L"natasja"][L"vorm"] = L"Aflossingsvrij";
-    mHypotheek = Hypotheek::CreateHypotheek(Hypotheek::HYPOTHEEK_VORM::Aflossingsvrij);
-    mHypotheek->SetHypotheekBedrag(Finance::Bedrag(mLening.GetValue()));
-    mHypotheek->SetRentePercentage(mRentePercentage.GetValue());
+    m_hypotheek->setHypotheek(Hypotheek::CreateHypotheek(Hypotheek::HYPOTHEEK_VORM::Aflossingsvrij));
+    m_hypotheek->SetHypotheekBedrag(Finance::Bedrag(mLening.GetValue()));
+    m_hypotheek->SetRentePercentage(mRentePercentage.GetValue());
 
-    mJaarrente.SetValue(mHypotheek->GetJaarPremie().ToDouble());
+    mJaarrente.SetValue(m_hypotheek->GetJaarPremie().ToDouble());
 }
 
 
@@ -184,7 +184,7 @@ void NatasjaLastenDialog::OnEnKillfocusEditStartdatum()
     mInifile[L"natasja"][L"start"] = (wchar_t*)dateString.GetBuffer();
     try {
         Utils::Date startDate(Utils::ToDate((wchar_t*)dateString.GetBuffer()));
-        mHypotheek->SetStartDate(startDate);
+        m_hypotheek->SetStartDate(startDate);
     }
     catch (...) {
 

@@ -158,7 +158,6 @@
   <ItemGroup>
     <ClCompile Include="AflossingsvrijeHypotheek.cpp" />
     <ClCompile Include="AnnuitaireHypotheek.cpp" />
-    <ClCompile Include="Bedrag.cpp" />
     <ClCompile Include="Hypotheek.cpp" />
     <ClCompile Include="HypotheekDefinitions.cpp" />
     <ClCompile Include="HypotheekModel.cpp" />
@@ -168,7 +167,6 @@
   <ItemGroup>
     <ClInclude Include="AflossingsvrijeHypotheek.h" />
     <ClInclude Include="AnnuitaireHypotheek.h" />
-    <ClInclude Include="include\HypotheekModel\Bedrag.h" />
     <ClInclude Include="include\HypotheekModel\framework.h" />
     <ClInclude Include="include\HypotheekModel\Hypotheek.h" />
     <ClInclude Include="include\HypotheekModel\HypotheekDefinitions.h" />
