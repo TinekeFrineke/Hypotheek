@@ -95,7 +95,7 @@ BOOL CHypotheekDialog::OnInitDialog()
 
     mTabControl.AddPage(new InvoerDialog(std::static_pointer_cast<IHypotheekOwner>(m_hypotheekOwner), mInifile, this), IDD_INVOER_DIALOG, L"Invoer");
     mTabControl.AddPage(new NatasjaLastenDialog(std::static_pointer_cast<IHypotheekOwner>(m_hypotheekOwner)/*mApplication*/, mInifile, this), IDD_LASTEN_NATASJA_DIALOG, L"Lasten Natasja");
-    mTabControl.AddPage(new OverviewDialog(std::static_pointer_cast<IHypotheekOwner>(m_hypotheekOwner)/*mApplication*/, mInifile, this), IDD_OVERVIEW_DIALOG, L"Overzicht");
+    mTabControl.AddPage(new OverviewDialog(std::static_pointer_cast<IHypotheek>(m_hypotheekOwner)/*mApplication*/, mInifile, this), IDD_OVERVIEW_DIALOG, L"Overzicht");
 
     CDialogEx::OnInitDialog();
 

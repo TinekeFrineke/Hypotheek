@@ -39,10 +39,11 @@
 #define IDC_RADIO_AFLOSSINGSVRIJ        1031
 #define IDC_EDIT1                       1032
 #define IDC_EDIT_STARTDATUM             1032
-#define IDC_MONTHLY                     1033
 #define IDC_RADIO_MONTHLY               1033
 #define IDC_RADIO_YEARLY                1034
 #define IDC_LIST1                       1035
+#define IDC_OVERVIEW_LIST               1035
+#define IDC_BUTTON1                     1036
 
 // Next default values for new objects
 // 
@@ -50,7 +51,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        138
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1036
+#define _APS_NEXT_CONTROL_VALUE         1037
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

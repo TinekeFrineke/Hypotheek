@@ -199,6 +199,7 @@
     <ClInclude Include="MyTabControl.h" />
     <ClInclude Include="NatasjaLastenDialog.h" />
     <ClInclude Include="OverviewDialog.h" />
+    <ClInclude Include="OverviewList.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="StringEdit.h" />
@@ -214,6 +215,7 @@
     <ClCompile Include="MyTabControl.cpp" />
     <ClCompile Include="NatasjaLastenDialog.cpp" />
     <ClCompile Include="OverviewDialog.cpp" />
+    <ClCompile Include="OverviewList.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

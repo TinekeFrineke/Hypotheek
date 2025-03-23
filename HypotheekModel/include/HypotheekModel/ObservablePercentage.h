@@ -5,7 +5,7 @@
 #include <Utilities/Bedrag.h>
 #include <Utilities/Subject.h>
 
-namespace Hypotheek
+namespace hypotheek
 {
 
 class ObservablePercentage
@@ -27,4 +27,4 @@ private:
     double mPercentage;
 };
 
-} // namespace Hypotheek
+} // namespace hypotheek

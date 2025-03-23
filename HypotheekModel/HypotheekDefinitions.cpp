@@ -1,5 +1,7 @@
 
 #include "HypotheekDefinitions.h"
 
-namespace Hypotheek {
-} // namespace Hypotheek
+namespace hypotheek {
+
+
+} // namespace hypotheek

@@ -4,7 +4,7 @@
 #include <Utilities/strutils.h>
 
 
-namespace Hypotheek
+namespace hypotheek
 {
 Percentage::Percentage()
     : mPercentage(0)
@@ -48,4 +48,4 @@ Percentage& Percentage::operator=(double percentage)
     return *this;
 }
 
-} // namespace Hypotheek
+} // namespace hypotheek

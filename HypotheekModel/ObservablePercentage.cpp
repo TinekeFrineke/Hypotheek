@@ -2,7 +2,7 @@
 
 #include <Utilities/strutils.h>
 
-namespace Hypotheek
+namespace hypotheek
 {
 
 ObservablePercentage::ObservablePercentage(double percentage)
@@ -34,4 +34,4 @@ ObservablePercentage& ObservablePercentage::operator=(double percentage)
     return *this;
 }
 
-} // namespace Hypotheek
+} // namespace hypotheek

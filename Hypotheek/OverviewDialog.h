@@ -2,10 +2,11 @@
 
 #include <memory>
 
+#include "OverviewList.h"
 #include "resource.h"
 #include "TabPage.h"
 
-class IHypotheekOwner;
+class IHypotheek;
 class Inifile;
 
 // OverviewDialog dialog
@@ -17,8 +18,8 @@ class OverviewDialog
     DECLARE_DYNAMIC(OverviewDialog)
 
 public:
-    OverviewDialog(std::shared_ptr<IHypotheekOwner>& hypotheek, Inifile& inifile, CWnd* pParent = nullptr);   // standard constructor
-    virtual ~OverviewDialog();
+    OverviewDialog(std::shared_ptr<IHypotheek> hypotheek, Inifile& inifile, CWnd* pParent = nullptr);
+    ~OverviewDialog() override;
 
 // Dialog Data
 #ifdef AFX_DESIGN_TIME
@@ -30,10 +31,29 @@ protected:
 
     DECLARE_MESSAGE_MAP()
 
+    virtual BOOL OnInitDialog() override;
+
+    afx_msg void OnBnClickedRadioMonthly();
+    afx_msg void OnBnClickedRadioYearly();
+    afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
+
 private:
+    enum class Type { Monthly, Yearly };
+
     // Inherited via TabPage
     virtual CDialog* GetDialog() override;
 
-    std::shared_ptr<IHypotheekOwner>& m_hypotheek;
+    void setMonthly();
+    void setYearly();
+    void fillOverview();
+    void fillMonthlyOverview();
+    void fillYearlyOverview();
+
+    Type m_type{};
+    std::shared_ptr<IHypotheek> m_hypotheek;
     Inifile& mInifile;
+
+    OverviewList m_overviewList;
+public:
+    afx_msg void OnExportButtonClicked();
 };

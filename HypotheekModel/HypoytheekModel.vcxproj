@@ -159,6 +159,7 @@
     <ClCompile Include="AflossingsvrijeHypotheek.cpp" />
     <ClCompile Include="AnnuitaireHypotheek.cpp" />
     <ClCompile Include="Hypotheek.cpp" />
+    <ClCompile Include="HypotheekCalculation.cpp" />
     <ClCompile Include="HypotheekDefinitions.cpp" />
     <ClCompile Include="HypotheekModel.cpp" />
     <ClCompile Include="ObservablePercentage.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="AnnuitaireHypotheek.h" />
     <ClInclude Include="include\HypotheekModel\framework.h" />
     <ClInclude Include="include\HypotheekModel\Hypotheek.h" />
+    <ClInclude Include="include\HypotheekModel\HypotheekData.h" />
     <ClInclude Include="include\HypotheekModel\HypotheekDefinitions.h" />
     <ClInclude Include="include\HypotheekModel\IHypotheek.h" />
     <ClInclude Include="include\HypotheekModel\ObservablePercentage.h" />

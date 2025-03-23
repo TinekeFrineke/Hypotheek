@@ -10,7 +10,7 @@
 #include "Percentage.h"
 #include "IHypotheek.h"
 
-namespace Hypotheek
+namespace hypotheek
 {
 
 struct VasteBedragen;
@@ -27,7 +27,11 @@ public:
     void SetStartDate(const Utils::Date& date) override;
     void SetRentePercentage(const Percentage& jaarrente) override;
 
-    Percentage EffectieveMaandRente() const;
+    Percentage effectiveMonthlyInterest() const;
+
+    Finance::Bedrag initialLoan() const override;
+    hypotheek::Percentage interestPercentage() const override;
+    Utils::Date StartDate() const override;
 
 protected:
     Finance::Bedrag mBedrag;
@@ -35,4 +39,4 @@ protected:
     Utils::Date mStartDate;
 };
 
-} //  namespace Hypotheek
+} //  namespace hypotheek

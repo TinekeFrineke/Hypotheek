@@ -2,7 +2,9 @@
 #include "HypotheekOwner.h"
 
 #include <Utilities/Bedrag.h>
+#include <Utilities/Date.h>
 #include <Utilities/Inifile.h>
+#include <HypotheekModel/Percentage.h>
 
 namespace {
 const std::wstring unspecifiedPand(L"<unspecified>");
@@ -94,6 +96,61 @@ void HypotheekOwner::PandenToInifile()
     m_inifile[L"panden"][L"huidigpand"] = mPand;
 }
 
+Finance::Bedrag HypotheekOwner::initialLoan() const
+{
+    return m_hypotheek->initialLoan();
+}
+
+hypotheek::Percentage HypotheekOwner::interestPercentage() const
+{
+    return m_hypotheek->interestPercentage();
+}
+
+hypotheek::Percentage HypotheekOwner::effectiveMonthlyInterest() const
+{
+    return m_hypotheek->effectiveMonthlyInterest();
+}
+
+Utils::Date HypotheekOwner::StartDate() const
+{
+    return m_hypotheek->StartDate();
+}
+
+Finance::Bedrag HypotheekOwner::maandRente(const Utils::Date& month) const
+{
+    return m_hypotheek->maandRente(month);
+}
+
+Finance::Bedrag HypotheekOwner::maandAflossing(const Utils::Date& month) const
+{
+    return m_hypotheek->maandAflossing(month);
+}
+
+Finance::Bedrag HypotheekOwner::maandRestSchuld(const Utils::Date& month) const
+{
+    return m_hypotheek->maandRestSchuld(month);
+}
+
+Finance::Bedrag HypotheekOwner::jaarRente(const Utils::Date& month) const
+{
+    return m_hypotheek->jaarRente(month);
+}
+
+Finance::Bedrag HypotheekOwner::jaarAflossing(const Utils::Date& month) const
+{
+    return m_hypotheek->jaarAflossing(month);
+}
+
+Finance::Bedrag HypotheekOwner::jaarRestSchuld(const Utils::Date& month) const
+{
+    return m_hypotheek->jaarRestSchuld(month);
+}
+
+void HypotheekOwner::setExtraAflossing(const Utils::Date& date, const Finance::Bedrag& bedrag)
+{
+    m_hypotheek->setExtraAflossing(date, bedrag);
+}
+
 Finance::Bedrag HypotheekOwner::GetMaandPremie() const
 {
     return m_hypotheek->GetMaandPremie();
@@ -124,7 +181,7 @@ void HypotheekOwner::SetStartDate(const Utils::Date& date)
     m_hypotheek->SetStartDate(date);
 }
 
-void HypotheekOwner::SetRentePercentage(const Hypotheek::Percentage& jaarrente)
+void HypotheekOwner::SetRentePercentage(const hypotheek::Percentage& jaarrente)
 {
     m_hypotheek->SetRentePercentage(jaarrente);
 }

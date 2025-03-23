@@ -6,7 +6,7 @@ namespace Finance {
 class Bedrag;
 }
 
-namespace Hypotheek {
+namespace hypotheek {
 
 class Percentage
 {
@@ -27,4 +27,4 @@ private:
     double mPercentage;
 };
 
-} // namespace Hypotheek
+} // namespace hypotheek

@@ -1,6 +1,6 @@
 #include "AflossingsvrijeHypotheek.h"
 
-namespace Hypotheek {
+namespace hypotheek {
 
 Finance::Bedrag AflossingsvrijeHypotheek::GetMaandPremie() const
 {
@@ -28,4 +28,38 @@ Finance::Bedrag AflossingsvrijeHypotheek::GetJaarPremie(int year) const
     return Finance::Bedrag();
 }
 
-} // namespace Hypotheek
+Finance::Bedrag AflossingsvrijeHypotheek::maandRente(const Utils::Date& month) const
+{
+    return Finance::Bedrag();
+}
+
+Finance::Bedrag AflossingsvrijeHypotheek::maandAflossing(const Utils::Date& month) const
+{
+    return Finance::Bedrag();
+}
+
+Finance::Bedrag AflossingsvrijeHypotheek::maandRestSchuld(const Utils::Date& month) const
+{
+    return Finance::Bedrag();
+}
+
+Finance::Bedrag AflossingsvrijeHypotheek::jaarRente(const Utils::Date& month) const
+{
+    return Finance::Bedrag();
+}
+
+Finance::Bedrag AflossingsvrijeHypotheek::jaarAflossing(const Utils::Date& month) const
+{
+    return Finance::Bedrag();
+}
+
+Finance::Bedrag AflossingsvrijeHypotheek::jaarRestSchuld(const Utils::Date& month) const
+{
+    return Finance::Bedrag();
+}
+
+void AflossingsvrijeHypotheek::setExtraAflossing(const Utils::Date& date, const Finance::Bedrag& bedrag)
+{
+}
+
+} // namespace hypotheek

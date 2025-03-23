@@ -2,7 +2,11 @@
 
 #include <math.h>       /* pow */
 
-namespace Hypotheek {
+namespace hypotheek {
+
+AnnuitaireHypotheek::AnnuitaireHypotheek()
+{
+}
 
 Finance::Bedrag AnnuitaireHypotheek::GetMaandPremie() const
 {
@@ -28,4 +32,38 @@ Finance::Bedrag AnnuitaireHypotheek::GetJaarPremie(int year) const
     return GetMaandPremie() * 12;
 }
 
-} // namespace Hypotheek
+Finance::Bedrag AnnuitaireHypotheek::maandRente(const Utils::Date& month) const
+{
+    return Finance::Bedrag();
+}
+
+Finance::Bedrag AnnuitaireHypotheek::maandAflossing(const Utils::Date& month) const
+{
+    return Finance::Bedrag();
+}
+
+Finance::Bedrag AnnuitaireHypotheek::maandRestSchuld(const Utils::Date& month) const
+{
+    return Finance::Bedrag();
+}
+
+Finance::Bedrag AnnuitaireHypotheek::jaarRente(const Utils::Date& month) const
+{
+    return Finance::Bedrag();
+}
+
+Finance::Bedrag AnnuitaireHypotheek::jaarAflossing(const Utils::Date& month) const
+{
+    return Finance::Bedrag();
+}
+
+Finance::Bedrag AnnuitaireHypotheek::jaarRestSchuld(const Utils::Date& month) const
+{
+    return Finance::Bedrag();
+}
+
+void AnnuitaireHypotheek::setExtraAflossing(const Utils::Date& date, const Finance::Bedrag& bedrag)
+{
+}
+
+} // namespace hypotheek

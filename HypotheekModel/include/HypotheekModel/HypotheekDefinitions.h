@@ -4,7 +4,7 @@
 #include <string>
 #include <Utilities/Bedrag.h>
 
-namespace Hypotheek
+namespace hypotheek
 {
 enum class HYPOTHEEK_VORM
 {
@@ -33,4 +33,4 @@ enum class HYPOTHEEK_VORM
 //};
 
 
-} // namespace Hypotheek
+} // namespace hypotheek
