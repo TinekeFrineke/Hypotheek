@@ -1,6 +1,7 @@
 #include "Hypotheek.h"
 
 #include <math.h>
+#include <stdexcept>
 
 #include "AflossingsvrijeHypotheek.h"
 #include "AnnuitaireHypotheek.h"
@@ -11,7 +12,7 @@ namespace hypotheek {
 using Finance::Bedrag;
 
 Hypotheek::Hypotheek()
-    : mStartDate(Utils::Date::Today())
+    : mStartDate(Utils::Today())
 {
 }
 

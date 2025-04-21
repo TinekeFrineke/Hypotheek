@@ -13,10 +13,10 @@ class IHypotheekOwner
 public:
     virtual ~IHypotheekOwner() = default;
 
-    virtual std::wstring GetPand() const = 0;
-    virtual std::vector<std::wstring> GetPanden() const = 0;
-    virtual void SetPand(const std::wstring& pand) = 0;
-    virtual void DeletePand(const std::wstring& pand) = 0;
+    virtual std::string GetPand() const = 0;
+    virtual std::vector<std::string> GetPanden() const = 0;
+    virtual void SetPand(const std::string& pand) = 0;
+    virtual void DeletePand(const std::string& pand) = 0;
 
     virtual void setHypotheek(std::unique_ptr<IHypotheek> hypotheek) = 0;
     virtual void resetHypotheek() = 0;

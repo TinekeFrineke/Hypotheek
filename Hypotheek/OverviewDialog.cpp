@@ -4,6 +4,9 @@
 #include "pch.h"
 
 #include "OverviewDialog.h"
+
+#include <fstream>
+
 #include "afxdialogex.h"
 
 #include <HypotheekModel/HypotheekCalculation.h>
@@ -124,12 +127,12 @@ void OverviewDialog::OnShowWindow(BOOL bShow, UINT nStatus)
 void OverviewDialog::OnExportButtonClicked()
 {
     const auto metrics = hypotheek::CreateMonthMetrics(*m_hypotheek);
-    std::wofstream output("overzicht.csv");
-    output << L"Datum,betaling,rente,aflossing,restschuld\n";
+    std::ofstream output(u8"overzicht.csv");
+    output << "Datum,betaling,rente,aflossing,restschuld\n";
     for (const auto& metric : metrics)
         output << ToString(metric.startDate) << L','
-               << metric.payment.ToTString() << L','
-               << metric.interest.ToTString() << L','
-               << metric.repayment.ToTString() << L','
-               << metric.remainingDebt.ToTString() << L'\n';
+               << metric.payment.ToString() << L','
+               << metric.interest.ToString() << L','
+               << metric.repayment.ToString() << L','
+               << metric.remainingDebt.ToString() << L'\n';
 }

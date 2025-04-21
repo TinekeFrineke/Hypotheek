@@ -13,13 +13,13 @@ class Percentage
 public:
     Percentage();
     Percentage(double percentage);
-    explicit Percentage(const std::wstring& aBedrag);
+    explicit Percentage(const std::string& aBedrag);
 
     double PercentageOf(double value) const;
     Finance::Bedrag PercentageOf(const Finance::Bedrag& value) const;
 
-    double            GetPercentage() const;
-    std::wstring      ToWString() const;
+    double GetPercentage() const;
+    std::string ToString() const;
 
     Percentage& operator=(double percentage);
 

@@ -7,7 +7,7 @@
 #include <HypotheekModel/Percentage.h>
 
 namespace {
-const std::wstring unspecifiedPand(L"<unspecified>");
+const std::string unspecifiedPand(u8"<unspecified>");
 }
 
 
@@ -33,17 +33,17 @@ IHypotheek* HypotheekOwner::getHypotheek() const
     return m_hypotheek.get();
 }
 
-std::wstring HypotheekOwner::GetPand() const
+std::string HypotheekOwner::GetPand() const
 {
     return mPand;
 }
 
-std::vector<std::wstring> HypotheekOwner::GetPanden() const
+std::vector<std::string> HypotheekOwner::GetPanden() const
 {
     return mPanden;
 }
 
-void HypotheekOwner::SetPand(const std::wstring& pand)
+void HypotheekOwner::SetPand(const std::string& pand)
 {
     mPand = pand;
     auto pandIter(std::find(mPanden.begin(), mPanden.end(), pand));
@@ -53,7 +53,7 @@ void HypotheekOwner::SetPand(const std::wstring& pand)
     PandenToInifile();
 }
 
-void HypotheekOwner::DeletePand(const std::wstring& pand)
+void HypotheekOwner::DeletePand(const std::string& pand)
 {
     if (pand == unspecifiedPand)
         return;
@@ -75,11 +75,11 @@ void HypotheekOwner::DeletePand(const std::wstring& pand)
 
 void HypotheekOwner::VulPandenUitInifile()
 {
-    mPand = m_inifile[L"panden"][L"huidigpand"];
+    mPand = m_inifile[u8"panden"][u8"huidigpand"];
     if (mPand.empty())
         mPand = unspecifiedPand;
 
-    for (auto pand : m_inifile[L"panden"])
+    for (auto pand : m_inifile[u8"panden"])
         mPanden.push_back(pand.second);
 
     auto pandIter(std::find(mPanden.begin(), mPanden.end(), unspecifiedPand));
@@ -89,11 +89,11 @@ void HypotheekOwner::VulPandenUitInifile()
 
 void HypotheekOwner::PandenToInifile()
 {
-    m_inifile[L"panden"].Clear();
+    m_inifile[u8"panden"].Clear();
     for (size_t i = 0; i < mPanden.size(); ++i)
-        m_inifile[L"panden"][L"pand" + std::to_wstring(i)] = mPanden[i];
+        m_inifile[u8"panden"][u8"pand" + std::to_string(i)] = mPanden[i];
 
-    m_inifile[L"panden"][L"huidigpand"] = mPand;
+    m_inifile[u8"panden"][u8"huidigpand"] = mPand;
 }
 
 Finance::Bedrag HypotheekOwner::initialLoan() const

@@ -10,6 +10,7 @@
 #include "resource.h"
 
 #include <filesystem>
+#include <fstream>
 
 #include <Utilities/Inifile.h>
 
@@ -18,6 +19,7 @@
 #include "InvoerDialog.h"
 #include "NatasjaLastenDialog.h"
 #include "OverviewDialog.h"
+#include "StrConvert.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -183,7 +185,12 @@ HCURSOR CHypotheekDialog::OnQueryDragIcon()
 void CHypotheekDialog::OnDestroy()
 {
     m_hypotheekOwner->PandenToInifile();
-    mInifile.Write();
+
+    TCHAR dir[MAX_PATH];
+    GetCurrentDirectory(MAX_PATH, dir);
+    auto outputName(StrConvert::Utf16ToUtf8(std::wstring(dir) + _T("\\hypotheek.ini")));
+    std::ofstream output(outputName);
+    output << mInifile;
 
     CDialogEx::OnDestroy();
 }

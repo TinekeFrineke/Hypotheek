@@ -49,7 +49,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 private:
-	std::wstring GetPand() const;
+	std::string GetPand() const;
 	void HerberekenKoopsomTotaal();
 	void HerberekenLening();
 	void VulPandCombo();

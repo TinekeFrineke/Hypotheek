@@ -4,18 +4,20 @@
 
 #include <assert.h>
 
-std::tstring CStringEdit::GetValue() const
+#include "StrConvert.h"
+
+std::string CStringEdit::GetValue() const
 {
   assert(m_hWnd != NULL);
   CString text;
   GetWindowText(text);
-  return (const TCHAR *)text;
+  return StrConvert::Utf16ToUtf8((const wchar_t *)text);
 }
 
 
-void CStringEdit::SetValue(const std::tstring & aValue)
+void CStringEdit::SetValue(const std::string & aValue)
 {
   assert(m_hWnd != NULL);
-  SetWindowText(aValue.c_str());
+  SetWindowText(StrConvert::Utf8ToUtf16(aValue).c_str());
 }
 

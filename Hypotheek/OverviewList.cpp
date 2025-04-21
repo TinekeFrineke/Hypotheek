@@ -1,5 +1,7 @@
 #include "OverviewList.h"
 
+#include "StrConvert.h"
+
 void ListControl::SetNumberOfColumns(int aColumns)
 {
     mNumberOfColumns = aColumns;
@@ -33,20 +35,16 @@ void OverviewListItem::Write(CListCtrl& aControl, int iItemIndex)
 
     // Start date
     lvi.iSubItem = 0;
-    lvi.pszText = _tcsdup(ToString(mItem.startDate).c_str());
+    lvi.pszText = _tcsdup(StrConvert::Utf8ToUtf16(ToString(mItem.startDate)).c_str());
     lvi.lParam = (LPARAM)&mItem;
 
     int index = aControl.InsertItem(&lvi);
 
-    aControl.SetItemText(index, 0, ToString(mItem.startDate).c_str());
-    aControl.SetItemData(index, (DWORD_PTR)this);
-    aControl.SetItemText(index, 1, mItem.payment.ToTString().c_str());
-    aControl.SetItemData(index, (DWORD_PTR)this);
-    aControl.SetItemText(index, 2, mItem.interest.ToTString().c_str());
-    aControl.SetItemData(index, (DWORD_PTR)this);
-    aControl.SetItemText(index, 3, mItem.repayment.ToTString().c_str());
-    aControl.SetItemData(index, (DWORD_PTR)this);
-    aControl.SetItemText(index, 4, mItem.remainingDebt.ToTString().c_str());
+    aControl.SetItemText(index, 0, StrConvert::Utf8ToUtf16(ToString(mItem.startDate)).c_str());
+    aControl.SetItemText(index, 1, StrConvert::Utf8ToUtf16(mItem.payment.ToString()).c_str());
+    aControl.SetItemText(index, 2, StrConvert::Utf8ToUtf16(mItem.interest.ToString()).c_str());
+    aControl.SetItemText(index, 3, StrConvert::Utf8ToUtf16(mItem.repayment.ToString()).c_str());
+    aControl.SetItemText(index, 4, StrConvert::Utf8ToUtf16(mItem.remainingDebt.ToString()).c_str());
     aControl.SetItemData(index, (DWORD_PTR)this);
 }
 

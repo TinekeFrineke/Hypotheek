@@ -2,14 +2,12 @@
 
 #include "afxcmn.h"
 
-#include "Utilities/StrUtils.h"
+#include <string>
 
 
 class CStringEdit : public CEdit
 {
 public:
-  std::tstring        GetValue() const;
-  void                SetValue(const std::tstring & aValue);
-
-protected:
+  std::string GetValue() const;
+  void SetValue(const std::string & aValue);
 };

@@ -10,7 +10,7 @@ ObservablePercentage::ObservablePercentage(double percentage)
 {
 }
 
-ObservablePercentage::ObservablePercentage(const std::wstring& percentage)
+ObservablePercentage::ObservablePercentage(const std::string& percentage)
     : mPercentage(Str::ToDouble(percentage))
 {
 }

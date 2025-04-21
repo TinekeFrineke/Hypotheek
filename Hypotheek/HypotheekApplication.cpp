@@ -3,6 +3,7 @@
 //
 
 #include "pch.h"
+#include <fstream>
 
 #include <Utilities/Inifile.h>
 #include <Utilities/strutils.h>
@@ -11,6 +12,7 @@
 #include "HypotheekApplication.h"
 #include "HypotheekDialog.h"
 #include "HypotheekOwner.h"
+#include "StrConvert.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -27,8 +29,10 @@ END_MESSAGE_MAP()
 // HypotheekApplication construction
 
 HypotheekApplication::HypotheekApplication()
-	: mInifile(GetCurrentDir() + _T("\\hypotheek.ini"))
 {
+	auto inputName(StrConvert::Utf16ToUtf8(GetCurrentDir() + _T("\\hypotheek.ini")));
+	std::ifstream input(inputName);
+	input >> mInifile;
 	// support Restart Manager
 	m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_RESTART;
 }
@@ -83,7 +87,9 @@ BOOL HypotheekApplication::InitInstance()
 		TRACE(traceAppMsg, 0, "Warning: if you are using MFC controls on the dialog, you cannot #define _AFX_NO_MFC_CONTROLS_IN_DIALOGS.\n");
 	}
 
-	mInifile.Write();
+	auto outputName(StrConvert::Utf16ToUtf8(GetCurrentDir() + _T("\\hypotheek.ini")));
+	std::ofstream output(outputName);
+	output << mInifile;
 
 	// Delete the shell manager created above.
 	if (pShellManager != nullptr)

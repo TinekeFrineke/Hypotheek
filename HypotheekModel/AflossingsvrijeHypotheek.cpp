@@ -1,5 +1,7 @@
 #include "AflossingsvrijeHypotheek.h"
 
+#include <iostream>
+
 namespace hypotheek {
 
 Finance::Bedrag AflossingsvrijeHypotheek::GetMaandPremie() const

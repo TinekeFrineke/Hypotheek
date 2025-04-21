@@ -15,7 +15,7 @@ Percentage::Percentage(double percentage)
 {
 }
 
-Percentage::Percentage(const std::wstring& percentage)
+Percentage::Percentage(const std::string& percentage)
     : mPercentage(Str::ToDouble(percentage))
 {
 }
@@ -37,9 +37,9 @@ double Percentage::GetPercentage() const
     return mPercentage;
 }
 
-std::wstring Percentage::ToWString() const
+std::string Percentage::ToString() const
 {
-    return std::to_wstring(mPercentage);
+    return std::to_string(mPercentage);
 }
 
 Percentage& Percentage::operator=(double percentage)

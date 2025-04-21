@@ -14,7 +14,7 @@ class ObservablePercentage
 public:
     // e.g. 4.5 means 4.5%
     explicit ObservablePercentage(double percentage);
-    explicit ObservablePercentage(const std::wstring& aBedrag);
+    explicit ObservablePercentage(const std::string& aBedrag);
 
     double PercentageOf(double value) const;
 

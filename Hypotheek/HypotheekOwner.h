@@ -22,10 +22,10 @@ public:
     virtual void resetHypotheek() override;
     virtual IHypotheek* getHypotheek() const override;
 
-    std::wstring GetPand() const override;
-    std::vector<std::wstring> GetPanden() const override;
-    void SetPand(const std::wstring& pand) override;
-    void DeletePand(const std::wstring& pand) override;
+    std::string GetPand() const override;
+    std::vector<std::string> GetPanden() const override;
+    void SetPand(const std::string& pand) override;
+    void DeletePand(const std::string& pand) override;
 
     // Inherited via IHypotheek
     virtual Finance::Bedrag GetMaandPremie() const override;
@@ -54,7 +54,7 @@ public:
 private:
     Inifile& m_inifile;
     std::unique_ptr<IHypotheek> m_hypotheek;
-    std::vector<std::wstring> mPanden;
-    std::wstring mPand;
+    std::vector<std::string> mPanden;
+    std::string mPand;
 };
 
