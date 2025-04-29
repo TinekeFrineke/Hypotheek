@@ -6,9 +6,9 @@
 #include <HypotheekModel/HypotheekDefinitions.h>
 #include <HypotheekModel/IHypotheek.h>
 #include <HypotheekModel/Percentage.h>
-#include <Utilities/Date.h>
-#include <Utilities/Inifile.h>
-#include <Utilities/strutils.h>
+#include <utilities/Date.h>
+#include <utilities/Inifile.h>
+#include <utilities/strutils.h>
 
 #include "afxdialogex.h"
 #include "IHypotheekOwner.h"

@@ -12,7 +12,7 @@
 #include <vector>
 #include "resource.h"		// main symbols
 
-#include <Utilities/Inifile.h>
+#include <utilities/Inifile.h>
 
 
 // HypotheekApplication:

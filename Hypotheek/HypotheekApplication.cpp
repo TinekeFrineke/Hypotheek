@@ -5,8 +5,8 @@
 #include "pch.h"
 #include <fstream>
 
-#include <Utilities/Inifile.h>
-#include <Utilities/strutils.h>
+#include <utilities/Inifile.h>
+#include <utilities/strutils.h>
 
 #include "framework.h"
 #include "HypotheekApplication.h"

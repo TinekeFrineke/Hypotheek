@@ -1,9 +1,9 @@
 
 #include "HypotheekOwner.h"
 
-#include <Utilities/Bedrag.h>
-#include <Utilities/Date.h>
-#include <Utilities/Inifile.h>
+#include <utilities/Bedrag.h>
+#include <utilities/Date.h>
+#include <utilities/Inifile.h>
 #include <HypotheekModel/Percentage.h>
 
 namespace {

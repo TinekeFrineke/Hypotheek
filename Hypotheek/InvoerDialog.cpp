@@ -5,8 +5,8 @@
 
 #include "afxdialogex.h"
 
-#include <Utilities/Inifile.h>
-#include <Utilities/StrUtils.h>
+#include <utilities/Inifile.h>
+#include <utilities/StrUtils.h>
 
 #include "IHypotheekOwner.h"
 #include "InvoerDialog.h"

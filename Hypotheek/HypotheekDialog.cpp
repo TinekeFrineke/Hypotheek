@@ -12,7 +12,7 @@
 #include <filesystem>
 #include <fstream>
 
-#include <Utilities/Inifile.h>
+#include <utilities/Inifile.h>
 
 #include "afxdialogex.h"
 #include "HypotheekOwner.h"
