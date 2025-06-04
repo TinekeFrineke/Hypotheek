@@ -194,12 +194,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DoubleEdit.h" />
+    <ClInclude Include="ExtraAflossingenDialog.h" />
+    <ClInclude Include="ExtraAflossingenList.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="HypotheekApplication.h" />
     <ClInclude Include="HypotheekDialog.h" />
     <ClInclude Include="HypotheekOwner.h" />
     <ClInclude Include="IHypotheekOwner.h" />
     <ClInclude Include="InvoerDialog.h" />
+    <ClInclude Include="ListControl.h" />
     <ClInclude Include="MyTabControl.h" />
     <ClInclude Include="NatasjaLastenDialog.h" />
     <ClInclude Include="OverviewDialog.h" />
@@ -213,10 +216,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DoubleEdit.cpp" />
+    <ClCompile Include="ExtraAflossingenDialog.cpp" />
+    <ClCompile Include="ExtraAflossingenList.cpp" />
     <ClCompile Include="HypotheekApplication.cpp" />
     <ClCompile Include="HypotheekDialog.cpp" />
     <ClCompile Include="HypotheekOwner.cpp" />
     <ClCompile Include="InvoerDialog.cpp" />
+    <ClCompile Include="ListControl.cpp" />
     <ClCompile Include="MyTabControl.cpp" />
     <ClCompile Include="NatasjaLastenDialog.cpp" />
     <ClCompile Include="OverviewDialog.cpp" />

@@ -1,11 +1,13 @@
-#include "OverviewList.h"
+#include "ExtraAflossingenList.h"
 
 #include "StrConvert.h"
 
-OverviewListItem::OverviewListItem(OverviewData anItem)
-    : mItem(anItem) {}
+ExtraAflossingListItem::ExtraAflossingListItem(const ExtraAflossingData& anItem)
+    : mItem(anItem)
+{
+}
 
-void OverviewListItem::Write(CListCtrl& aControl, int iItemIndex)
+void ExtraAflossingListItem::Write(CListCtrl& aControl, int iItemIndex)
 {
     LV_ITEM lvi;
     memset(&lvi, 0, sizeof(LV_ITEM));
@@ -28,12 +30,12 @@ void OverviewListItem::Write(CListCtrl& aControl, int iItemIndex)
     aControl.SetItemData(index, (DWORD_PTR)this);
 }
 
-OverviewData OverviewListItem::GetItem()
+ExtraAflossingData ExtraAflossingListItem::GetItem() const
 {
     return mItem;
 }
 
-OverviewList::OverviewList()
+ExtraAflossingList::ExtraAflossingList()
 {
     SetNumberOfColumns(5);
     SetColumnInfo(0, ColInfo(100, LVCFMT_LEFT, _T("Datum")));
@@ -43,11 +45,11 @@ OverviewList::OverviewList()
     SetColumnInfo(4, ColInfo(70, LVCFMT_RIGHT, _T("Restschuld")));
 }
 
-OverviewList::~OverviewList()
+ExtraAflossingList::~ExtraAflossingList()
 {
 }
 
-void OverviewList::View(const std::vector<OverviewData>& aItems)
+void ExtraAflossingList::View(const std::vector<ExtraAflossingData>& aItems)
 {
     SetRedraw(FALSE);
     DeleteAllItems();
@@ -55,7 +57,7 @@ void OverviewList::View(const std::vector<OverviewData>& aItems)
 
     SetItemCount((int)aItems.size());
     for (size_t i = 0; i < aItems.size(); ++i)
-        mItems.push_back(OverviewListItem(aItems[i]));
+        mItems.push_back(ExtraAflossingListItem(aItems[i]));
 
     for (size_t i = 0; i < mItems.size(); ++i)
         mItems[i].Write(*this, (int)i);
@@ -73,6 +75,6 @@ void OverviewList::View(const std::vector<OverviewData>& aItems)
     SetRedraw(TRUE);
 }
 
-void OverviewList::ClearItems()
+void ExtraAflossingList::ClearItems()
 {
 }

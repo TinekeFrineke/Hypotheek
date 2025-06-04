@@ -84,4 +84,12 @@ std::vector<HypotheekData> CreateMonthMetrics(const IHypotheek& hypotheek)
     return hyptheekData;
 }
 
+splitPayment createSplitPayment(const hypotheekState& state)
+{
+    Finance::Bedrag payment = state.annuiteit;
+    auto rentebedrag = Finance::Bedrag(state.restSchuld.ToDouble() * (state.rente.GetPercentage() / 12) / 100);
+    auto aflossing = state.annuiteit - rentebedrag;
+    return { rentebedrag, aflossing };
+}
+
 } // namespace hypotheek

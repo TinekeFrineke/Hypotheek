@@ -9,7 +9,7 @@
 #include "ListControl.h"
 
 
-struct OverviewData {
+struct ExtraAflossingData {
     Utils::Date startDate;
     Finance::Bedrag payment;
     Finance::Bedrag interest;
@@ -18,30 +18,30 @@ struct OverviewData {
 };
 
 // Can contain both monthly and yearly data
-class OverviewListItem
+class ExtraAflossingListItem
 {
 public:
-    OverviewListItem(OverviewData anItem);
+    ExtraAflossingListItem(const ExtraAflossingData& anItem);
 
     void Write(CListCtrl& aControl, int iItemIndex);
 
-    OverviewData GetItem();
+    ExtraAflossingData GetItem() const;
 
 private:
-    OverviewData mItem;
+    ExtraAflossingData mItem;
 };
 
 
-class OverviewList:
-    public ListControl
+class ExtraAflossingList
+    : public ListControl
 {
     // Construction
 public:
-    OverviewList();
-    ~OverviewList() override;
+    ExtraAflossingList();
+    ~ExtraAflossingList() override;
 
     // Operations
-    void View(const std::vector<OverviewData>& aItems);
+    void View(const std::vector<ExtraAflossingData>& aItems);
 
     //OverviewListItem* GetItemAt(int iIndex);
     //OverviewListItem* GetSelectedItem();
@@ -54,6 +54,6 @@ protected:
     void ClearItems();
 
 private:
-    std::vector<OverviewListItem> mItems;
+    std::vector<ExtraAflossingListItem> mItems;
 };
 

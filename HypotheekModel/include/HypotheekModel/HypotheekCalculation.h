@@ -11,5 +11,9 @@ struct HypotheekData;
 
 std::vector<HypotheekData> CreateMonthMetrics(const IHypotheek& hypotheek);
 
+
+splitPayment createSplitPayment(const hypotheekState& state);
+
+
 } // namespace hypotheek
 
