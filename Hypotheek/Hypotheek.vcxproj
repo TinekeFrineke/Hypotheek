@@ -98,7 +98,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>$(SolutionDir)HypotheekModel\$(PlatformTarget)\$(Configuration)\HypotheekModel.lib;C:\Projects\Combined\utilities_versions\v1.0.1\build\vc2019\$(PlatformTarget)\$(Configuration)\Utilities.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)HypotheekModel\$(PlatformTarget)\$(Configuration)\HypotheekModel.lib;C:\Projects\Combined\utilities_versions\v1.0.2\build\vs2019\$(PlatformTarget)\$(Configuration)\utilities.lib</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -151,7 +151,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(SolutionDir)HypotheekModel\$(PlatformTarget)\$(Configuration)\HypotheekModel.lib;C:\Projects\Combined\utilities_versions\v1.0.1\build\vc2019\$(PlatformTarget)\$(Configuration)\Utilities.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)HypotheekModel\$(PlatformTarget)\$(Configuration)\HypotheekModel.lib;C:\Projects\Combined\utilities_versions\v1.0.2\build\vs2019\$(PlatformTarget)\$(Configuration)\utilities.lib</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
