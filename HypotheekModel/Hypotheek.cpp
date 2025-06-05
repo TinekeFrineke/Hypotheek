@@ -34,13 +34,6 @@ void Hypotheek::SetRentePercentage(const Percentage& jaarrente)
 Percentage Hypotheek::effectiveMonthlyInterest() const
 {
     return mRentePercentage.GetPercentage() / 12.0;
-    //auto i = mRentePercentage.GetPercentage() * 0.01;
-    //auto n = 12.0;
-    //auto r = pow((1.0 + (i / n)), n) - 1;
-    //auto r2 = (100.0 * r) / 12.0;
-    //return r2;
-    //auto r2 =  std::pow(1 + (mRentePercentage.GetPercentage() / 1200), 12);
-    //return r2;
 }
 
 Finance::Bedrag Hypotheek::initialLoan() const
@@ -56,6 +49,19 @@ hypotheek::Percentage Hypotheek::interestPercentage() const
 Utils::Date Hypotheek::StartDate() const
 {
     return mStartDate;
+}
+
+void Hypotheek::setExtraAflossing(const Utils::Date& date, const Finance::Bedrag& bedrag)
+{
+    if (m_extraAflossings.find(date) == m_extraAflossings.end())
+        m_extraAflossings[date] = bedrag;
+    else
+        m_extraAflossings[date] += bedrag;
+}
+
+std::map<Utils::Date, Finance::Bedrag> Hypotheek::getExtraAflossings() const
+{
+    return m_extraAflossings;
 }
 
 std::unique_ptr<IHypotheek> CreateHypotheek(HYPOTHEEK_VORM vorm)

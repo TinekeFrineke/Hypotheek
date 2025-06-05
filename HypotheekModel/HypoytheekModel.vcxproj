@@ -167,22 +167,28 @@
     <ClCompile Include="Hypotheek.cpp" />
     <ClCompile Include="HypotheekCalculation.cpp" />
     <ClCompile Include="HypotheekDefinitions.cpp" />
+    <ClCompile Include="HypotheekEventCollection.cpp" />
     <ClCompile Include="HypotheekModel.cpp" />
     <ClCompile Include="NormalPayment.cpp" />
     <ClCompile Include="ObservablePercentage.cpp" />
+    <ClCompile Include="OverzichtCreator.cpp" />
     <ClCompile Include="Percentage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AflossingsvrijeHypotheek.h" />
     <ClInclude Include="AnnuitaireHypotheek.h" />
     <ClInclude Include="ExtraPayment.h" />
+    <ClInclude Include="HypotheekEventCollection.h" />
     <ClInclude Include="IHypotheekEvent.h" />
+    <ClInclude Include="IHypotheekEventCollection.h" />
     <ClInclude Include="include\HypotheekModel\framework.h" />
     <ClInclude Include="include\HypotheekModel\Hypotheek.h" />
     <ClInclude Include="include\HypotheekModel\HypotheekData.h" />
     <ClInclude Include="include\HypotheekModel\HypotheekDefinitions.h" />
     <ClInclude Include="include\HypotheekModel\IHypotheek.h" />
+    <ClInclude Include="include\HypotheekModel\IHypotheekVisitor.h" />
     <ClInclude Include="include\HypotheekModel\ObservablePercentage.h" />
+    <ClInclude Include="include\HypotheekModel\OverzichtCreator.h" />
     <ClInclude Include="include\HypotheekModel\Percentage.h" />
     <ClInclude Include="NormalPayment.h" />
   </ItemGroup>

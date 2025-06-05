@@ -84,6 +84,14 @@ std::vector<HypotheekData> CreateMonthMetrics(const IHypotheek& hypotheek)
     return hyptheekData;
 }
 
+Finance::Bedrag calculateAnnuity(const Finance::Bedrag& restSchuld, const Percentage& jaarrente, int aantalPeriodes)
+{
+    double jaarrentefractie = jaarrente.GetPercentage() / 100;
+    double maandrentefractie = jaarrentefractie / 12;
+    auto annuiteit = (maandrentefractie / (1 - (pow(1 + maandrentefractie, -aantalPeriodes)))) * restSchuld.ToDouble();
+    return Finance::Bedrag(annuiteit);
+}
+
 splitPayment createSplitPayment(const hypotheekState& state)
 {
     Finance::Bedrag payment = state.annuiteit;

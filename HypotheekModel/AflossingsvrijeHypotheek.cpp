@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "IHypotheekVisitor.h"
+
 namespace hypotheek {
 
 Finance::Bedrag AflossingsvrijeHypotheek::GetMaandPremie() const
@@ -60,8 +62,9 @@ Finance::Bedrag AflossingsvrijeHypotheek::jaarRestSchuld(const Utils::Date& mont
     return Finance::Bedrag();
 }
 
-void AflossingsvrijeHypotheek::setExtraAflossing(const Utils::Date& date, const Finance::Bedrag& bedrag)
+void AflossingsvrijeHypotheek::accept(hypotheek::IVisitor& visitor) const
 {
+    visitor.visit(*this);
 }
 
 } // namespace hypotheek

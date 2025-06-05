@@ -18,7 +18,7 @@ hypotheekState ExtraPayment::nextState(const hypotheekState& state) const
     int aantalPeriodes(state.periodesTeGaan);
     double restschuld = (state.restSchuld - m_payment).ToDouble();
     auto annuiteit = (maandrentefractie / (1 - (pow(1 + maandrentefractie, -aantalPeriodes)))) * restschuld;
-    return { state.periodesTeGaan, state.rente, Finance::Bedrag(annuiteit), restschuld };
+    return { state.periodesTeGaan, state.rente, Finance::Bedrag(annuiteit), Finance::Bedrag(restschuld) };
 }
 
 

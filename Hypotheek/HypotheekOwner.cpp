@@ -96,6 +96,16 @@ void HypotheekOwner::PandenToInifile()
     m_inifile[u8"panden"][u8"huidigpand"] = mPand;
 }
 
+std::map<Utils::Date, Finance::Bedrag> HypotheekOwner::getExtraAflossings() const
+{
+    return m_hypotheek->getExtraAflossings();
+}
+
+void HypotheekOwner::accept(hypotheek::IVisitor& visitor) const
+{
+    m_hypotheek->accept(visitor);
+}
+
 Finance::Bedrag HypotheekOwner::initialLoan() const
 {
     return m_hypotheek->initialLoan();

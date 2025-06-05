@@ -1,5 +1,7 @@
 #pragma once
 
+
+#include <map>
 #include <memory>
 
 namespace Finance {
@@ -12,6 +14,10 @@ class Percentage;
 
 namespace Utils {
 class Date;
+}
+
+namespace hypotheek {
+class IVisitor;
 }
 
 class IHypotheek
@@ -41,6 +47,9 @@ public:
     virtual void SetStartDate(const Utils::Date& date) = 0;
     virtual void SetRentePercentage(const hypotheek::Percentage& jaarrente) = 0;
     virtual void setExtraAflossing(const Utils::Date& date, const Finance::Bedrag& bedrag) = 0;
+    virtual std::map<Utils::Date, Finance::Bedrag> getExtraAflossings() const = 0;
+
+    virtual void accept(hypotheek::IVisitor& visitor) const = 0;
 };
 
 namespace hypotheek

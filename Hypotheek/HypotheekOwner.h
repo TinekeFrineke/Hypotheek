@@ -47,6 +47,8 @@ public:
     virtual hypotheek::Percentage interestPercentage() const override;
     virtual hypotheek::Percentage effectiveMonthlyInterest() const override;
     virtual Utils::Date StartDate() const override;
+    virtual std::map<Utils::Date, Finance::Bedrag> getExtraAflossings() const override;
+    virtual void accept(hypotheek::IVisitor& visitor) const override;
 
     void VulPandenUitInifile();
     void PandenToInifile();
@@ -56,5 +58,6 @@ private:
     std::unique_ptr<IHypotheek> m_hypotheek;
     std::vector<std::string> mPanden;
     std::string mPand;
+
 };
 

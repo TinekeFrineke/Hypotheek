@@ -12,6 +12,7 @@
 #include <HypotheekModel/HypotheekCalculation.h>
 #include <HypotheekModel/HypotheekData.h>
 #include <HypotheekModel/IHypotheek.h>
+#include <HypotheekModel/OverzichtCreator.h>
 
 // OverviewDialog dialog
 
@@ -22,7 +23,6 @@ OverviewDialog::OverviewDialog(std::shared_ptr<IHypotheek> hypotheek, Inifile& i
     , m_hypotheek(std::move(hypotheek))
     , mInifile(inifile)
 {
-    //std::cout << "Hypotheek == 0x" << reinterpret_cast<int>()
 }
 
 OverviewDialog::~OverviewDialog()
@@ -121,6 +121,12 @@ void OverviewDialog::OnBnClickedRadioYearly()
 void OverviewDialog::OnShowWindow(BOOL bShow, UINT nStatus)
 {
     fillOverview();
+
+    m_hypotheek->setExtraAflossing(Utils::Today(), Finance::Bedrag(10000.0));
+
+    hypotheek::OverzichtCreator creator;
+    m_hypotheek->accept(creator);
+    //std::cout << "Hypotheek == 0x" << reinterpret_cast<int>()
 }
 
 

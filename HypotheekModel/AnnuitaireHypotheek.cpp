@@ -2,6 +2,9 @@
 
 #include <math.h>       /* pow */
 
+#include "IHypotheekVisitor.h"
+
+
 namespace hypotheek {
 
 AnnuitaireHypotheek::AnnuitaireHypotheek()
@@ -62,8 +65,9 @@ Finance::Bedrag AnnuitaireHypotheek::jaarRestSchuld(const Utils::Date& month) co
     return Finance::Bedrag();
 }
 
-void AnnuitaireHypotheek::setExtraAflossing(const Utils::Date& date, const Finance::Bedrag& bedrag)
+void AnnuitaireHypotheek::accept(hypotheek::IVisitor& visitor) const
 {
+    visitor.visit(*this);
 }
 
 } // namespace hypotheek

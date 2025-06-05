@@ -31,23 +31,10 @@ struct hypotheekState
     Finance::Bedrag restSchuld;
 };
 
-
-
-class NormalPayment
-    : public IEvent
-{
-public:
- 
-    hypotheekState nextState(const hypotheekState& state) const override;
-
+struct hypotheekEventData {
+    Utils::Date date;
+    hypotheekState state;
 };
 
-class ExtraPayment
-    : public IEvent
-{
-public:
-    ExtraPayment(const Finance::Bedrag& payment);
-    hypotheekState nextState(const hypotheekState& state) const override;
-};
 
 } // namespace hypotheek
