@@ -11,6 +11,7 @@
 #define IDD_LASTEN_NATASJA_DIALOG       134
 #define IDD_OVERVIEW_DIALOG             136
 #define IDD_EXTRA_AFLOSSINGEN           138
+#define IDD_NIEUWE_EXTRA_AFLOSSING      140
 #define IDC_HYPOTHEEK_TAB               1000
 #define IDC_KOOPSOM_EDIT                1005
 #define IDC_VERKOOP_MAKELAAR_EDIT       1006
@@ -40,20 +41,23 @@
 #define IDC_RADIO_AFLOSSINGSVRIJ        1031
 #define IDC_EDIT1                       1032
 #define IDC_EDIT_STARTDATUM             1032
+#define IDC_DATUM                       1032
 #define IDC_RADIO_MONTHLY               1033
 #define IDC_RADIO_YEARLY                1034
 #define IDC_LIST1                       1035
 #define IDC_OVERVIEW_LIST               1035
+#define IDC_AFLOSSINGEN_LIST            1035
 #define IDC_BUTTON1                     1038
 #define IDC_BUTTON2                     1039
+#define IDC_BEDRAG                      1040
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        140
+#define _APS_NEXT_RESOURCE_VALUE        142
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1040
+#define _APS_NEXT_CONTROL_VALUE         1041
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

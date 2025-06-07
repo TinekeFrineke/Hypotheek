@@ -161,6 +161,11 @@ void HypotheekOwner::setExtraAflossing(const Utils::Date& date, const Finance::B
     m_hypotheek->setExtraAflossing(date, bedrag);
 }
 
+void HypotheekOwner::removeExtraAflossing(const Utils::Date& date)
+{
+    m_hypotheek->removeExtraAflossing(date);
+}
+
 Finance::Bedrag HypotheekOwner::GetMaandPremie() const
 {
     return m_hypotheek->GetMaandPremie();

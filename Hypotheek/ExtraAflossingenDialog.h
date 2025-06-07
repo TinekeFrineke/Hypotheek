@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "ExtraAflossingenList.h"
 #include "resource.h"
 #include "TabPage.h"
 
@@ -31,12 +32,21 @@ public:
 	enum { IDD = IDD_EXTRA_AFLOSSINGEN };
 #endif
 
+    afx_msg void OnBnClickedButton1();
+    afx_msg void OnBnClickedButton2();
+
+    BOOL OnInitDialog() override;
+    void OnShowWindow(BOOL bShow, UINT nStatus);
+
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()
     
 private:
+    void View();
+
     Inifile& mInifile;
     std::shared_ptr<IHypotheekOwner> m_hypotheek;
+    ExtraAflossingList m_aflossingenList;
 };

@@ -37,7 +37,7 @@ MyTabControl::~MyTabControl()
 }
 
 
-void MyTabControl::AddPage(TabPage* aPage, UINT aResourceID, TCHAR* aName)
+void MyTabControl::AddPage(TabPage* aPage, UINT aResourceID, const wchar_t* aName)
 {
     assert(aPage->GetDialog() != NULL);
     m_tabPages.push_back(DialogData(aPage, aResourceID, aName));

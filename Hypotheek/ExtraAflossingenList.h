@@ -10,11 +10,8 @@
 
 
 struct ExtraAflossingData {
-    Utils::Date startDate;
+    Utils::Date date;
     Finance::Bedrag payment;
-    Finance::Bedrag interest;
-    Finance::Bedrag repayment;
-    Finance::Bedrag remainingDebt;
 };
 
 // Can contain both monthly and yearly data
@@ -43,8 +40,9 @@ public:
     // Operations
     void View(const std::vector<ExtraAflossingData>& aItems);
 
-    //OverviewListItem* GetItemAt(int iIndex);
-    //OverviewListItem* GetSelectedItem();
+    ExtraAflossingListItem* GetItemAt(int iIndex);
+    ExtraAflossingListItem* GetSelectedItem();
+    void RemoveSelectedItem();
     //void SelectItem(const weight::Item& anItem);
     //void SelectItem(int iIndex, bool bSelect);
 

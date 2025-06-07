@@ -59,6 +59,11 @@ void Hypotheek::setExtraAflossing(const Utils::Date& date, const Finance::Bedrag
         m_extraAflossings[date] += bedrag;
 }
 
+void Hypotheek::removeExtraAflossing(const Utils::Date& date)
+{
+    m_extraAflossings.erase(date);
+}
+
 std::map<Utils::Date, Finance::Bedrag> Hypotheek::getExtraAflossings() const
 {
     return m_extraAflossings;

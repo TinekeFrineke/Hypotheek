@@ -17,16 +17,13 @@ void ExtraAflossingListItem::Write(CListCtrl& aControl, int iItemIndex)
 
     // Start date
     lvi.iSubItem = 0;
-    lvi.pszText = _tcsdup(StrConvert::Utf8ToUtf16(ToString(mItem.startDate)).c_str());
+    lvi.pszText = _tcsdup(StrConvert::Utf8ToUtf16(ToString(mItem.date)).c_str());
     lvi.lParam = (LPARAM)&mItem;
 
     int index = aControl.InsertItem(&lvi);
 
-    aControl.SetItemText(index, 0, StrConvert::Utf8ToUtf16(ToString(mItem.startDate)).c_str());
+    aControl.SetItemText(index, 0, StrConvert::Utf8ToUtf16(ToString(mItem.date)).c_str());
     aControl.SetItemText(index, 1, StrConvert::Utf8ToUtf16(mItem.payment.ToString()).c_str());
-    aControl.SetItemText(index, 2, StrConvert::Utf8ToUtf16(mItem.interest.ToString()).c_str());
-    aControl.SetItemText(index, 3, StrConvert::Utf8ToUtf16(mItem.repayment.ToString()).c_str());
-    aControl.SetItemText(index, 4, StrConvert::Utf8ToUtf16(mItem.remainingDebt.ToString()).c_str());
     aControl.SetItemData(index, (DWORD_PTR)this);
 }
 
@@ -40,9 +37,6 @@ ExtraAflossingList::ExtraAflossingList()
     SetNumberOfColumns(5);
     SetColumnInfo(0, ColInfo(100, LVCFMT_LEFT, _T("Datum")));
     SetColumnInfo(1, ColInfo(50, LVCFMT_RIGHT, _T("Betaling")));
-    SetColumnInfo(2, ColInfo(50, LVCFMT_RIGHT, _T("Rente")));
-    SetColumnInfo(3, ColInfo(50, LVCFMT_RIGHT, _T("Aflossing")));
-    SetColumnInfo(4, ColInfo(70, LVCFMT_RIGHT, _T("Restschuld")));
 }
 
 ExtraAflossingList::~ExtraAflossingList()
@@ -67,7 +61,6 @@ void ExtraAflossingList::View(const std::vector<ExtraAflossingData>& aItems)
         LVITEM item;
         item.iItem = 0;
         item.mask = LVIF_STATE;
-        //SelectItem(0, true);
     }
 
     for (int i = 0; i < 2; ++i)
@@ -75,6 +68,40 @@ void ExtraAflossingList::View(const std::vector<ExtraAflossingData>& aItems)
     SetRedraw(TRUE);
 }
 
+ExtraAflossingListItem* ExtraAflossingList::GetItemAt(int iIndex)
+{
+    return nullptr;
+}
+
+ExtraAflossingListItem* ExtraAflossingList::GetSelectedItem()
+{
+    POSITION pos = GetFirstSelectedItemPosition();
+    if (pos == NULL)
+        return NULL;
+
+    int nItem = GetNextSelectedItem(pos);
+
+    if (nItem >= 0 && nItem < int(mItems.size()))
+    {
+        int count = this->GetItemCount(); (void)count;
+        DWORD_PTR itemdata = GetItemData(nItem);
+        return (ExtraAflossingListItem*)itemdata;
+    }
+
+    return NULL;
+}
+
+void ExtraAflossingList::RemoveSelectedItem()
+{
+    POSITION pos = GetFirstSelectedItemPosition();
+    if (pos == NULL)
+        return;
+
+    int nItem = GetNextSelectedItem(pos);
+    DeleteItem(nItem);
+}
+
 void ExtraAflossingList::ClearItems()
 {
+    mItems.clear();
 }

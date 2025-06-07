@@ -28,27 +28,28 @@ public:
     void DeletePand(const std::string& pand) override;
 
     // Inherited via IHypotheek
-    virtual Finance::Bedrag GetMaandPremie() const override;
-    virtual Finance::Bedrag GetMaandPremie(const Utils::Date& month) const override;
-    virtual Finance::Bedrag GetJaarPremie() const override;
-    virtual Finance::Bedrag GetJaarPremie(int year) const override;
-    virtual void SetHypotheekBedrag(const Finance::Bedrag& bedrag) override;
-    virtual void SetStartDate(const Utils::Date& date) override;
-    virtual void SetRentePercentage(const hypotheek::Percentage& jaarrente) override;
+    Finance::Bedrag GetMaandPremie() const override;
+    Finance::Bedrag GetMaandPremie(const Utils::Date& month) const override;
+    Finance::Bedrag GetJaarPremie() const override;
+    Finance::Bedrag GetJaarPremie(int year) const override;
+    void SetHypotheekBedrag(const Finance::Bedrag& bedrag) override;
+    void SetStartDate(const Utils::Date& date) override;
+    void SetRentePercentage(const hypotheek::Percentage& jaarrente) override;
 
-    virtual Finance::Bedrag maandRente(const Utils::Date& month) const override;
-    virtual Finance::Bedrag maandAflossing(const Utils::Date& month) const override;
-    virtual Finance::Bedrag maandRestSchuld(const Utils::Date& month) const override;
-    virtual Finance::Bedrag jaarRente(const Utils::Date& month) const override;
-    virtual Finance::Bedrag jaarAflossing(const Utils::Date& month) const override;
-    virtual Finance::Bedrag jaarRestSchuld(const Utils::Date& month) const override;
-    virtual void setExtraAflossing(const Utils::Date& date, const Finance::Bedrag& bedrag) override;
-    virtual Finance::Bedrag initialLoan() const override;
-    virtual hypotheek::Percentage interestPercentage() const override;
-    virtual hypotheek::Percentage effectiveMonthlyInterest() const override;
-    virtual Utils::Date StartDate() const override;
-    virtual std::map<Utils::Date, Finance::Bedrag> getExtraAflossings() const override;
-    virtual void accept(hypotheek::IVisitor& visitor) const override;
+    Finance::Bedrag maandRente(const Utils::Date& month) const override;
+    Finance::Bedrag maandAflossing(const Utils::Date& month) const override;
+    Finance::Bedrag maandRestSchuld(const Utils::Date& month) const override;
+    Finance::Bedrag jaarRente(const Utils::Date& month) const override;
+    Finance::Bedrag jaarAflossing(const Utils::Date& month) const override;
+    Finance::Bedrag jaarRestSchuld(const Utils::Date& month) const override;
+    void setExtraAflossing(const Utils::Date& date, const Finance::Bedrag& bedrag) override;
+    void removeExtraAflossing(const Utils::Date& date) override;
+    Finance::Bedrag initialLoan() const override;
+    hypotheek::Percentage interestPercentage() const override;
+    hypotheek::Percentage effectiveMonthlyInterest() const override;
+    Utils::Date StartDate() const override;
+    std::map<Utils::Date, Finance::Bedrag> getExtraAflossings() const override;
+    void accept(hypotheek::IVisitor& visitor) const override;
 
     void VulPandenUitInifile();
     void PandenToInifile();

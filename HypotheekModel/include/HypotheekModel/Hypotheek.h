@@ -34,6 +34,7 @@ public:
     Utils::Date StartDate() const override;
 
     void setExtraAflossing(const Utils::Date& date, const Finance::Bedrag& bedrag) override;
+    void removeExtraAflossing(const Utils::Date& date) override;
     std::map<Utils::Date, Finance::Bedrag> getExtraAflossings() const override;
 
 protected:

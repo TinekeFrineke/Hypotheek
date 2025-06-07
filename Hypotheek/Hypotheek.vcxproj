@@ -194,6 +194,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DoubleEdit.h" />
+    <ClInclude Include="ExtraAflossingDialog.h" />
     <ClInclude Include="ExtraAflossingenDialog.h" />
     <ClInclude Include="ExtraAflossingenList.h" />
     <ClInclude Include="framework.h" />
@@ -216,6 +217,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DoubleEdit.cpp" />
+    <ClCompile Include="ExtraAflossingDialog.cpp" />
     <ClCompile Include="ExtraAflossingenDialog.cpp" />
     <ClCompile Include="ExtraAflossingenList.cpp" />
     <ClCompile Include="HypotheekApplication.cpp" />
