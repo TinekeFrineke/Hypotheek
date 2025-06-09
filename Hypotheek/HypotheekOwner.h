@@ -8,13 +8,15 @@
 #include "IHypotheekOwner.h"
 
 class IHypotheek;
+namespace utils {
 class Inifile;
+}
 
 class HypotheekOwner
     : public IHypotheekOwner
 {
 public:
-    HypotheekOwner(Inifile& inifile);
+    HypotheekOwner(utils::Inifile& inifile);
     ~HypotheekOwner() override;
 
     // Inherited via IHypotheekOwner
@@ -55,7 +57,7 @@ public:
     void PandenToInifile();
 
 private:
-    Inifile& m_inifile;
+    utils::Inifile& m_inifile;
     std::unique_ptr<IHypotheek> m_hypotheek;
     std::vector<std::string> mPanden;
     std::string mPand;

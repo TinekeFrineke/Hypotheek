@@ -11,7 +11,7 @@ const std::string unspecifiedPand(u8"<unspecified>");
 }
 
 
-HypotheekOwner::HypotheekOwner(Inifile& inifile)
+HypotheekOwner::HypotheekOwner(utils::Inifile& inifile)
     : m_inifile(inifile)
 {
 }
@@ -75,12 +75,17 @@ void HypotheekOwner::DeletePand(const std::string& pand)
 
 void HypotheekOwner::VulPandenUitInifile()
 {
-    mPand = m_inifile[u8"panden"][u8"huidigpand"];
-    if (mPand.empty())
+    try {
+        mPand = m_inifile.get(u8"panden", u8"huidigpand");
+    }
+    catch (std::exception& /*ex*/) {
         mPand = unspecifiedPand;
+    }
 
-    for (auto pand : m_inifile[u8"panden"])
-        mPanden.push_back(pand.second);
+    auto sections(m_inifile.getSections());
+    auto found = std::find(sections.begin(), sections.end(), u8"panden");
+    if (found != sections.end())
+        mPanden = m_inifile.getKeys(*found);
 
     auto pandIter(std::find(mPanden.begin(), mPanden.end(), unspecifiedPand));
     if (pandIter == mPanden.end())
@@ -89,11 +94,11 @@ void HypotheekOwner::VulPandenUitInifile()
 
 void HypotheekOwner::PandenToInifile()
 {
-    m_inifile[u8"panden"].Clear();
+    m_inifile.erase(u8"panden");
     for (size_t i = 0; i < mPanden.size(); ++i)
-        m_inifile[u8"panden"][u8"pand" + std::to_string(i)] = mPanden[i];
+        m_inifile.set(u8"panden", u8"pand" + std::to_string(i), mPanden[i]);
 
-    m_inifile[u8"panden"][u8"huidigpand"] = mPand;
+    m_inifile.set(u8"panden", u8"huidigpand", mPand);
 }
 
 std::map<Utils::Date, Finance::Bedrag> HypotheekOwner::getExtraAflossings() const

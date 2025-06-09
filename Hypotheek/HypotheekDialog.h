@@ -9,14 +9,16 @@
 #include "MyTabControl.h"
 
 class HypotheekOwner;
+namespace utils {
 class Inifile;
+}
 
 // CHypotheekDialog dialog
 class CHypotheekDialog : public CDialogEx
 {
 // Construction
 public:
-	CHypotheekDialog(HypotheekApplication& application, Inifile& inifile, CWnd* pParent = nullptr);
+	CHypotheekDialog(HypotheekApplication& application, utils::Inifile& inifile, CWnd* pParent = nullptr);
 	~CHypotheekDialog() override;
 
 // Dialog Data
@@ -36,6 +38,7 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
+	afx_msg void OnDestroy();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 
@@ -44,7 +47,5 @@ private:
 
 	HypotheekApplication& mApplication;
 	MyTabControl mTabControl;
-	Inifile& mInifile;
-public:
-	afx_msg void OnDestroy();
+	utils::Inifile& mInifile;
 };

@@ -44,7 +44,7 @@ private:
 	//void VulPandenUitInifile();
 	//void PandenToInifile();
 
-	Inifile mInifile;
+	utils::Inifile mInifile;
 	//std::vector<std::wstring> mPanden;
 	//std::wstring mPand;
 };

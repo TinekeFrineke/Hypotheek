@@ -18,7 +18,7 @@
 
 IMPLEMENT_DYNAMIC(OverviewDialog, CDialogEx)
 
-OverviewDialog::OverviewDialog(std::shared_ptr<IHypotheek> hypotheek, Inifile& inifile, CWnd* pParent /*=nullptr*/)
+OverviewDialog::OverviewDialog(std::shared_ptr<IHypotheek> hypotheek, utils::Inifile& inifile, CWnd* pParent /*=nullptr*/)
     : CDialogEx(IDD_OVERVIEW_DIALOG, pParent)
     , m_hypotheek(std::move(hypotheek))
     , mInifile(inifile)

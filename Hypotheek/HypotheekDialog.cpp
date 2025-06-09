@@ -64,7 +64,7 @@ END_MESSAGE_MAP()
 
 
 
-CHypotheekDialog::CHypotheekDialog(HypotheekApplication& application, Inifile& inifile, CWnd* pParent /*=nullptr*/)
+CHypotheekDialog::CHypotheekDialog(HypotheekApplication& application, utils::Inifile& inifile, CWnd* pParent /*=nullptr*/)
     : CDialogEx(IDD_HYPOTHEEK_DIALOG, pParent)
     , mApplication(application)
     , mInifile(inifile)

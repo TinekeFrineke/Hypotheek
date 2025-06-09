@@ -4,7 +4,9 @@
 #include "resource.h"
 #include "TabPage.h"
 
+namespace utils {
 class Inifile;
+}
 class IHypotheekOwner;
 
 // NatasjaLastenDialog dialog
@@ -16,7 +18,7 @@ class NatasjaLastenDialog
 	DECLARE_DYNAMIC(NatasjaLastenDialog)
 
 public:
-	NatasjaLastenDialog(std::shared_ptr<IHypotheekOwner> hypotheek, Inifile& inifile, CWnd* pParent = nullptr);   // standard constructor
+	NatasjaLastenDialog(std::shared_ptr<IHypotheekOwner> hypotheek, utils::Inifile& inifile, CWnd* pParent = nullptr);   // standard constructor
 	virtual ~NatasjaLastenDialog();
 
 	virtual CDialog* GetDialog() override {
@@ -63,7 +65,6 @@ private:
 	CButton mRadioAflossingsvrij;
 	CEdit mStartDatum;
 
-	//HypotheekApplication& mApplication;
-	Inifile& mInifile;
+	utils::Inifile& mInifile;
 	std::shared_ptr<IHypotheekOwner> m_hypotheek;
 };

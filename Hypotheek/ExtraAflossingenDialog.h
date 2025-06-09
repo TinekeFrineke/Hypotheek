@@ -10,7 +10,9 @@
 #include "resource.h"
 #include "TabPage.h"
 
+namespace utils {
 class Inifile;
+}
 class IHypotheekOwner;
 
 
@@ -21,7 +23,7 @@ class ExtraAflossingenDialog
 	DECLARE_DYNAMIC(ExtraAflossingenDialog)
 
 public:
-	ExtraAflossingenDialog(std::shared_ptr<IHypotheekOwner> hypotheek, Inifile& inifile, CWnd* pParent = nullptr);
+	ExtraAflossingenDialog(std::shared_ptr<IHypotheekOwner> hypotheek, utils::Inifile& inifile, CWnd* pParent = nullptr);
     ~ExtraAflossingenDialog() override;
 
     virtual CDialog* GetDialog() override {
@@ -46,7 +48,7 @@ protected:
 private:
     void View();
 
-    Inifile& mInifile;
+    utils::Inifile& mInifile;
     std::shared_ptr<IHypotheekOwner> m_hypotheek;
     ExtraAflossingList m_aflossingenList;
 };

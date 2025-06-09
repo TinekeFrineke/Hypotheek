@@ -6,7 +6,9 @@
 #include "TabPage.h"
 
 class HypotheekApplication;
+namespace utils {
 class Inifile;
+}
 
 // InvoerDialog dialog
 
@@ -17,7 +19,7 @@ class InvoerDialog
 	DECLARE_DYNAMIC(InvoerDialog)
 
 public:
-	InvoerDialog(std::shared_ptr<IHypotheekOwner> hypotheek, Inifile& inifile, CWnd* pParent = nullptr);   // standard constructor
+	InvoerDialog(std::shared_ptr<IHypotheekOwner> hypotheek, utils::Inifile& inifile, CWnd* pParent = nullptr);   // standard constructor
 	virtual ~InvoerDialog();
 
 	virtual BOOL OnInitDialog() override;
@@ -42,6 +44,7 @@ public:
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 	afx_msg void OnEnChangeNotarisEdit();
 	afx_msg void OnBnClickedSaveButton();
+	afx_msg void OnBnClickedDeleteButton();
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
@@ -56,7 +59,7 @@ private:
 	void VulDialoog();
 	void BewaarDialoog();
 
-	Inifile& mInifile;
+	utils::Inifile& mInifile;
 
 	CDoubleEdit mKoopsomEdit;
 	CDoubleEdit mTaxatieEdit;
@@ -69,9 +72,6 @@ private:
 	CDoubleEdit mLenen;
 	CDoubleEdit mNotarisEdit;
 
-	//HypotheekApplication& mApplication;
 	std::shared_ptr<IHypotheekOwner> m_hypotheek;
 	CComboBox mPandCombo;
-public:
-	afx_msg void OnBnClickedDeleteButton();
 };

@@ -7,7 +7,9 @@
 #include "TabPage.h"
 
 class IHypotheek;
+namespace utils {
 class Inifile;
+}
 
 // OverviewDialog dialog
 
@@ -18,7 +20,7 @@ class OverviewDialog
     DECLARE_DYNAMIC(OverviewDialog)
 
 public:
-    OverviewDialog(std::shared_ptr<IHypotheek> hypotheek, Inifile& inifile, CWnd* pParent = nullptr);
+    OverviewDialog(std::shared_ptr<IHypotheek> hypotheek, utils::Inifile& inifile, CWnd* pParent = nullptr);
     ~OverviewDialog() override;
 
 // Dialog Data
@@ -51,7 +53,7 @@ private:
 
     Type m_type{};
     std::shared_ptr<IHypotheek> m_hypotheek;
-    Inifile& mInifile;
+    utils::Inifile& mInifile;
 
     OverviewList m_overviewList;
 public:

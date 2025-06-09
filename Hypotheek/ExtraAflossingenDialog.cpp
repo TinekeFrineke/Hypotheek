@@ -13,7 +13,7 @@
 
 IMPLEMENT_DYNAMIC(ExtraAflossingenDialog, CDialogEx)
 
-ExtraAflossingenDialog::ExtraAflossingenDialog(std::shared_ptr<IHypotheekOwner> hypotheek, Inifile& inifile, CWnd* pParent /*=nullptr*/)
+ExtraAflossingenDialog::ExtraAflossingenDialog(std::shared_ptr<IHypotheekOwner> hypotheek, utils::Inifile& inifile, CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_EXTRA_AFLOSSINGEN, pParent)
     , mInifile(inifile)
     , m_hypotheek(std::move(hypotheek))
