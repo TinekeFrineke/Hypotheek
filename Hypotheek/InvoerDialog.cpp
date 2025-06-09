@@ -98,7 +98,7 @@ void InvoerDialog::HerberekenLening()
 
 void InvoerDialog::VulPandCombo()
 {
-    mPandCombo.Clear();
+    mPandCombo.ResetContent();
     for (auto pand : m_hypotheek->GetPanden())
         mPandCombo.AddString(StrConvert::Utf8ToUtf16(pand).c_str());
 }

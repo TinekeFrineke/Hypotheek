@@ -84,8 +84,13 @@ void HypotheekOwner::VulPandenUitInifile()
 
     auto sections(m_inifile.getSections());
     auto found = std::find(sections.begin(), sections.end(), u8"panden");
-    if (found != sections.end())
-        mPanden = m_inifile.getKeys(*found);
+    if (found != sections.end()) {
+        mPanden.clear();
+        const auto keys = m_inifile.getKeys(*found);
+        for (auto key : keys)
+            if (key.find("pand") == 0)
+                mPanden.push_back(m_inifile.get(u8"panden", key));
+    }
 
     auto pandIter(std::find(mPanden.begin(), mPanden.end(), unspecifiedPand));
     if (pandIter == mPanden.end())
