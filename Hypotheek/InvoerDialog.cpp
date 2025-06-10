@@ -93,7 +93,7 @@ void InvoerDialog::HerberekenKoopsomTotaal()
 void InvoerDialog::HerberekenLening()
 {
     mLenen.SetValue(mKoopsomTotaal.GetValue() - mNatasjaEigenGeld.GetValue());
-    mInifile.set(GetPand(), u8"lening", std::to_string(mLenen.GetValue()));
+    mInifile.set(GetPand(), "lening", std::to_string(mLenen.GetValue()));
 }
 
 void InvoerDialog::VulPandCombo()
@@ -109,61 +109,61 @@ void InvoerDialog::VulDialoog()
 
     mPandCombo.SelectString(0, StrConvert::Utf8ToUtf16(m_hypotheek->GetPand()).c_str());
 
-    mKoopsomEdit.SetValue(Str::ToDouble(mInifile.get(GetPand(), u8"koopsom")));
-    mTaxatieEdit.SetValue(Str::ToDouble(mInifile.get(u8"invoer", u8"taxatie")));
-    mIngEdit.SetValue(Str::ToDouble(mInifile.get(u8"invoer", u8"ingadvies")));
-    mRieksEdit.SetValue(Str::ToDouble(mInifile.get(u8"invoer", u8"rieks")));
-    mNotarisEdit.SetValue(Str::ToDouble(mInifile.get(u8"invoer", u8"notaris")));
-    mNhgEdit.SetValue(Str::ToDouble(mInifile.get(GetPand(), u8"nhg")));
-    mKoopsomOverigen.SetValue(Str::ToDouble(mInifile.get(GetPand(), u8"overige")));
-    mNatasjaEigenGeld.SetValue(Str::ToDouble(mInifile.get(u8"invoer", u8"natasja")));
+    mKoopsomEdit.SetValue(Str::ToDouble(mInifile.get(GetPand(), "koopsom")));
+    mTaxatieEdit.SetValue(Str::ToDouble(mInifile.get("invoer", "taxatie")));
+    mIngEdit.SetValue(Str::ToDouble(mInifile.get("invoer", "ingadvies")));
+    mRieksEdit.SetValue(Str::ToDouble(mInifile.get("invoer", "rieks")));
+    mNotarisEdit.SetValue(Str::ToDouble(mInifile.get("invoer", "notaris")));
+    mNhgEdit.SetValue(Str::ToDouble(mInifile.get(GetPand(), "nhg")));
+    mKoopsomOverigen.SetValue(Str::ToDouble(mInifile.get(GetPand(), "overige")));
+    mNatasjaEigenGeld.SetValue(Str::ToDouble(mInifile.get("invoer", "natasja")));
 }
 
 void InvoerDialog::BewaarDialoog()
 {
-    mInifile.set(GetPand(), u8"koopsom", std::to_string(mKoopsomEdit.GetValue()));
-    mInifile.set(GetPand(), u8"nhg", std::to_string(mNhgEdit.GetValue()));
-    mInifile.set(GetPand(), u8"overige", std::to_string(mKoopsomOverigen.GetValue()));
+    mInifile.set(GetPand(), "koopsom", std::to_string(mKoopsomEdit.GetValue()));
+    mInifile.set(GetPand(), "nhg", std::to_string(mNhgEdit.GetValue()));
+    mInifile.set(GetPand(), "overige", std::to_string(mKoopsomOverigen.GetValue()));
 }
 
 
 void InvoerDialog::OnEnChangeKoopsomEdit()
 {
-    mInifile.set(GetPand(), u8"koopsom", std::to_string(mKoopsomEdit.GetValue()));
+    mInifile.set(GetPand(), "koopsom", std::to_string(mKoopsomEdit.GetValue()));
     HerberekenKoopsomTotaal();
 }
 
 
 void InvoerDialog::OnEnChangeTaxatieEdit()
 {
-    mInifile.set(u8"invoer", u8"taxatie", std::to_string(mTaxatieEdit.GetValue()));
+    mInifile.set("invoer", "taxatie", std::to_string(mTaxatieEdit.GetValue()));
     HerberekenKoopsomTotaal();
 }
 
 
 void InvoerDialog::OnEnChangeIngEdit()
 {
-    mInifile.set(u8"invoer", u8"ingadvies", std::to_string(mIngEdit.GetValue()));
+    mInifile.set("invoer", "ingadvies", std::to_string(mIngEdit.GetValue()));
     HerberekenKoopsomTotaal();
 }
 
 
 void InvoerDialog::OnEnChangeRieksEdit()
 {
-    mInifile.set(u8"invoer", u8"rieks", std::to_string(mRieksEdit.GetValue()));
+    mInifile.set("invoer", "rieks", std::to_string(mRieksEdit.GetValue()));
 }
 
 
 void InvoerDialog::OnEnChangeNhgEdit()
 {
-    mInifile.set(GetPand(), u8"nhg", std::to_string(mNhgEdit.GetValue()));
+    mInifile.set(GetPand(), "nhg", std::to_string(mNhgEdit.GetValue()));
     HerberekenKoopsomTotaal();
 }
 
 
 void InvoerDialog::OnEnChangeOverigEdit()
 {
-    mInifile.set(GetPand(), u8"overige", std::to_string(mKoopsomOverigen.GetValue()));
+    mInifile.set(GetPand(), "overige", std::to_string(mKoopsomOverigen.GetValue()));
     HerberekenKoopsomTotaal();
 }
 
@@ -176,14 +176,14 @@ void InvoerDialog::OnEnChangeKostenKoperTotaalEdit()
 
 void InvoerDialog::OnEnChangeNatasjaEigenGeldEdit()
 {
-    mInifile.set(u8"invoer", u8"natasja", std::to_string(mNatasjaEigenGeld.GetValue()));
+    mInifile.set("invoer", "natasja", std::to_string(mNatasjaEigenGeld.GetValue()));
     HerberekenLening();
 }
 
 
 void InvoerDialog::OnEnChangeNotarisEdit()
 {
-    mInifile.set(u8"invoer", u8"notaris", std::to_string(mNotarisEdit.GetValue()));
+    mInifile.set("invoer", "notaris", std::to_string(mNotarisEdit.GetValue()));
     HerberekenKoopsomTotaal();
 }
 

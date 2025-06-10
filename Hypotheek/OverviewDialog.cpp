@@ -75,19 +75,11 @@ void OverviewDialog::fillOverview()
 
 void OverviewDialog::fillMonthlyOverview()
 {
-    const auto metrics = hypotheek::CreateMonthMetrics(*m_hypotheek);
-    std::vector<OverviewData> overviewData;
-    for (const auto& metric : metrics) {
-        OverviewData data;
-        data.startDate = metric.startDate;
-        data.payment = metric.payment;
-        data.interest = metric.interest;
-        data.repayment = metric.repayment;
-        data.remainingDebt = metric.remainingDebt;
-        overviewData.push_back(data);
-    }
+    hypotheek::OverzichtCreator creator;
+    m_hypotheek->accept(creator);
 
-    m_overviewList.View(overviewData);
+
+//    m_overviewList.View(overviewData);
 }
 
 void OverviewDialog::fillYearlyOverview()
@@ -120,25 +112,20 @@ void OverviewDialog::OnBnClickedRadioYearly()
 
 void OverviewDialog::OnShowWindow(BOOL bShow, UINT nStatus)
 {
-    fillOverview();
-
-    m_hypotheek->setExtraAflossing(Utils::Today(), Finance::Bedrag(10000.0));
-
-    hypotheek::OverzichtCreator creator;
-    m_hypotheek->accept(creator);
-    //std::cout << "Hypotheek == 0x" << reinterpret_cast<int>()
+    if (bShow)
+        fillOverview();
 }
 
 
 void OverviewDialog::OnExportButtonClicked()
 {
     const auto metrics = hypotheek::CreateMonthMetrics(*m_hypotheek);
-    std::ofstream output(u8"overzicht.csv");
+    std::ofstream output("overzicht.csv");
     output << "Datum,betaling,rente,aflossing,restschuld\n";
     for (const auto& metric : metrics)
-        output << ToString(metric.startDate) << L','
-               << metric.payment.ToString() << L','
-               << metric.interest.ToString() << L','
-               << metric.repayment.ToString() << L','
-               << metric.remainingDebt.ToString() << L'\n';
+        output << Utils::ToString(metric.startDate) << ','
+               << metric.payment.ToString() << ','
+               << metric.interest.ToString() << ','
+               << metric.repayment.ToString() << ','
+               << metric.remainingDebt.ToString() << '\n';
 }

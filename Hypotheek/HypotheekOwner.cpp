@@ -7,7 +7,7 @@
 #include <HypotheekModel/Percentage.h>
 
 namespace {
-const std::string unspecifiedPand(u8"<unspecified>");
+const std::string unspecifiedPand("<unspecified>");
 }
 
 
@@ -76,20 +76,20 @@ void HypotheekOwner::DeletePand(const std::string& pand)
 void HypotheekOwner::VulPandenUitInifile()
 {
     try {
-        mPand = m_inifile.get(u8"panden", u8"huidigpand");
+        mPand = m_inifile.get("panden", "huidigpand");
     }
     catch (std::exception& /*ex*/) {
         mPand = unspecifiedPand;
     }
 
     auto sections(m_inifile.getSections());
-    auto found = std::find(sections.begin(), sections.end(), u8"panden");
+    auto found = std::find(sections.begin(), sections.end(), "panden");
     if (found != sections.end()) {
         mPanden.clear();
         const auto keys = m_inifile.getKeys(*found);
         for (auto key : keys)
             if (key.find("pand") == 0)
-                mPanden.push_back(m_inifile.get(u8"panden", key));
+                mPanden.push_back(m_inifile.get("panden", key));
     }
 
     auto pandIter(std::find(mPanden.begin(), mPanden.end(), unspecifiedPand));
@@ -99,11 +99,11 @@ void HypotheekOwner::VulPandenUitInifile()
 
 void HypotheekOwner::PandenToInifile()
 {
-    m_inifile.erase(u8"panden");
+    m_inifile.erase("panden");
     for (size_t i = 0; i < mPanden.size(); ++i)
-        m_inifile.set(u8"panden", u8"pand" + std::to_string(i), mPanden[i]);
+        m_inifile.set("panden", "pand" + std::to_string(i), mPanden[i]);
 
-    m_inifile.set(u8"panden", u8"huidigpand", mPand);
+    m_inifile.set("panden", "huidigpand", mPand);
 }
 
 std::map<Utils::Date, Finance::Bedrag> HypotheekOwner::getExtraAflossings() const

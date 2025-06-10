@@ -25,6 +25,7 @@ struct splitPayment
 
 struct hypotheekState
 {
+    Utils::Date datum;
     int periodesTeGaan;
     Percentage rente;
     Finance::Bedrag annuiteit;

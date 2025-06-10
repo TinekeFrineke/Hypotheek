@@ -5,14 +5,15 @@
 
 namespace hypotheek {
 
-NormalPayment::NormalPayment()
+NormalPayment::NormalPayment(const Utils::Date& date)
+    : m_date(date)
 {
 }
 
 hypotheekState NormalPayment::nextState(const hypotheekState& state) const
 {
-    auto splitPament = createSplitPayment(state);
-    return { state.periodesTeGaan - 1, state.rente, state.annuiteit, state.restSchuld - splitPament.aflossing };
+    auto splitPayment = createSplitPayment(state);
+    return { m_date, state.periodesTeGaan - 1, state.rente, state.annuiteit, state.restSchuld - splitPayment.aflossing };
 }
 
 

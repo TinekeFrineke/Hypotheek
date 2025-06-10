@@ -24,6 +24,7 @@ void EventCollection::addEvent(const Utils::Date& date, std::unique_ptr<IEvent> 
 std::vector<hypotheekEventData> EventCollection::calculate()
 {
     hypotheekState state;
+    state.datum = m_startDate;
     state.restSchuld = m_hypotheekBedrag;
     state.rente = m_jaarrente;
     state.periodesTeGaan = m_aantalPeriodes;

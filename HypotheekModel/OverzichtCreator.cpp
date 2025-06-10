@@ -11,31 +11,19 @@
 namespace hypotheek {
 
 
-namespace {
-Utils::Date addMonth(const Utils::Date& date) {
-    if (date.Month() == Utils::Date::MONTH::December) {
-        return Utils::Date { Utils::Date::DDay(date.Day()), Utils::Date::MONTH::January, Utils::Date::DYear(date.Year() + 1) };
-    }
-    else {
-        return Utils::Date{ Utils::Date::DDay(date.Day()), static_cast<Utils::Date::MONTH>(static_cast<int>(date.Month()) + 1), Utils::Date::DYear(date.Year()) };
-    }
-}
-}
-
-
 void OverzichtCreator::visit(const AnnuitaireHypotheek& hypotheek)
 {
     EventCollection collection(hypotheek.initialLoan(), hypotheek.interestPercentage(), 360, hypotheek.StartDate());
 
     Utils::Date startDate(hypotheek.StartDate());
     for (auto period = 0; period < 360; ++period) {
-        collection.addEvent(startDate, std::make_unique<NormalPayment>());
-        startDate = addMonth(startDate);
+        collection.addEvent(startDate, std::make_unique<NormalPayment>(startDate));
+        startDate.AddMonths(1);
     }
 
     const auto extraAflossingen{ hypotheek.getExtraAflossings() };
     for (auto aflossing : extraAflossingen)
-        collection.addEvent(aflossing.first, std::make_unique<ExtraPayment>(aflossing.second));
+        collection.addEvent(aflossing.first, std::make_unique<ExtraPayment>(aflossing.first, aflossing.second));
 
     auto data = collection.calculate();
 

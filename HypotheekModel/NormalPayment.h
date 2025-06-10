@@ -10,9 +10,12 @@ class NormalPayment
     : public IEvent
 {
 public:
-    NormalPayment();
+    NormalPayment(const Utils::Date& date);
 
     virtual hypotheekState nextState(const hypotheekState& state) const override;
+
+private:
+    Utils::Date m_date;
 };
 
 } // namespace hypotheek

@@ -1,6 +1,8 @@
 
 #include "HypotheekCalculation.h"
 
+#include <chrono>
+
 #include <Utilities/Bedrag.h>
 #include <Utilities/Date.h>
 
@@ -94,10 +96,39 @@ Finance::Bedrag calculateAnnuity(const Finance::Bedrag& restSchuld, const Percen
 
 splitPayment createSplitPayment(const hypotheekState& state)
 {
-    Finance::Bedrag payment = state.annuiteit;
-    auto rentebedrag = Finance::Bedrag(state.restSchuld.ToDouble() * (state.rente.GetPercentage() / 12) / 100);
-    auto aflossing = state.annuiteit - rentebedrag;
-    return { rentebedrag, aflossing };
+    return createSplitPayment(1, state.annuiteit, state.rente, state.restSchuld);
+
+    //Finance::Bedrag payment = state.annuiteit;
+    //auto rentebedrag = Finance::Bedrag(state.restSchuld.ToDouble() * (state.rente.GetPercentage() / 12) / 100);
+    //auto aflossing = state.annuiteit - rentebedrag;
+    //return { rentebedrag, aflossing };
+}
+
+splitPayment createSplitPayment(const Finance::Bedrag monthAnnuity, const Percentage& interest, const Finance::Bedrag& debt)
+{
+    return createSplitPayment(1, monthAnnuity, interest, debt);
+}
+
+splitPayment createSplitPayment(double fractionOfMonth, const Finance::Bedrag monthAnnuity, const Percentage& interest, const Finance::Bedrag& debt)
+{
+    Finance::Bedrag payment{ monthAnnuity.ToDouble() * fractionOfMonth };
+    auto renteBedrag = Finance::Bedrag(debt.ToDouble() * fractionOfMonth * (interest.GetPercentage() / 12) / 100);
+    auto aflossing = payment - renteBedrag;
+    return { renteBedrag, aflossing };
+}
+
+unsigned int daysInMonth(Utils::Date::MONTH month, int year)
+{
+    auto ym = std::chrono::year_month{ std::chrono::year{year}, std::chrono::month{static_cast<unsigned int>(month)} };
+    auto ymdl = std::chrono::year_month_day_last{ ym / std::chrono::last };
+    return static_cast<unsigned>(ymdl.day());
+}
+
+double daysFraction(unsigned int dayFrom, unsigned int dayTo, Utils::Date::MONTH month, int year)
+{
+    auto nrOfDaysInMonth = daysInMonth(month, year);
+    unsigned int diff = abs((int(dayFrom) - int(dayTo)));
+    return double(diff) / nrOfDaysInMonth;
 }
 
 } // namespace hypotheek
