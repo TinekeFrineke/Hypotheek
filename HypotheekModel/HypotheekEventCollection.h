@@ -2,7 +2,11 @@
 
 #include <map>
 
+#include <utilities/Bedrag.h>
+#include <utilities/Date.h>
+
 #include "IHypotheekEventCollection.h"
+#include "Percentage.h"
 
 
 namespace hypotheek {
@@ -15,7 +19,7 @@ public:
 
     // Inherited via IEventCollection
     virtual void addEvent(const Utils::Date& date, std::unique_ptr<IEvent> event) override;
-    virtual std::vector<hypotheekEventData> calculate() override;
+    virtual std::vector<HypotheekData> calculate() override;
 
 private:
     Utils::Date m_startDate;

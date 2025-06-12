@@ -5,6 +5,8 @@
 #include "ExtraAflossingenDialog.h"
 #include "afxdialogex.h"
 
+#include <utilities/Inifile.h>
+
 #include "ExtraAflossingDialog.h"
 #include "IHypotheekOwner.h"
 
@@ -74,6 +76,7 @@ void ExtraAflossingenDialog::OnBnClickedButton2()
 		return;
 
 	m_hypotheek->removeExtraAflossing(item->GetItem().date);
+	mInifile.erase("ExtraAflossingen", ToString(item->GetItem().date));
 	m_aflossingenList.RemoveSelectedItem();
 }
 

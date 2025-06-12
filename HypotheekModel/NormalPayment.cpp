@@ -10,10 +10,13 @@ NormalPayment::NormalPayment(const Utils::Date& date)
 {
 }
 
-hypotheekState NormalPayment::nextState(const hypotheekState& state) const
+HypotheekStepResult NormalPayment::nextState(const HypotheekState& state) const
 {
-    auto splitPayment = createSplitPayment(state);
-    return { m_date, state.periodesTeGaan - 1, state.rente, state.annuiteit, state.restSchuld - splitPayment.aflossing };
+    auto difference(state.datum.DaysDifference(m_date));
+    double fraction = difference / daysInMonth(state.datum.Month(), state.datum.Year());
+    auto splitPayment = createSplitPayment(fraction, state.annuiteit, state.rente, state.restSchuld);
+//    auto splitPayment = createSplitPayment(state);
+    return { { m_date, state.periodesTeGaan - 1, state.rente, state.annuiteit, state.restSchuld - splitPayment.aflossing }, splitPayment };
 }
 
 

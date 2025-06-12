@@ -190,7 +190,7 @@ void CHypotheekDialog::OnDestroy()
 
     TCHAR dir[MAX_PATH];
     GetCurrentDirectory(MAX_PATH, dir);
-    auto outputName(StrConvert::Utf16ToUtf8(std::wstring(dir) + _T("\\hypotheek.ini")));
+    auto outputName(StrConvert::Utf16ToUtf8(std::wstring(dir) + L"\\hypotheek.ini"));
     std::ofstream output(outputName);
     output << mInifile;
 

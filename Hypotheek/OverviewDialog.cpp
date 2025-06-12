@@ -119,13 +119,13 @@ void OverviewDialog::OnShowWindow(BOOL bShow, UINT nStatus)
 
 void OverviewDialog::OnExportButtonClicked()
 {
-    const auto metrics = hypotheek::CreateMonthMetrics(*m_hypotheek);
-    std::ofstream output("overzicht.csv");
-    output << "Datum,betaling,rente,aflossing,restschuld\n";
-    for (const auto& metric : metrics)
-        output << Utils::ToString(metric.startDate) << ','
-               << metric.payment.ToString() << ','
-               << metric.interest.ToString() << ','
-               << metric.repayment.ToString() << ','
-               << metric.remainingDebt.ToString() << '\n';
+    //const auto metrics = hypotheek::CreateMonthMetrics(*m_hypotheek);
+    //std::ofstream output("overzicht.csv");
+    //output << "Datum,betaling,rente,aflossing,restschuld\n";
+    //for (const auto& metric : metrics)
+    //    output << Utils::ToString(metric.startDate) << ','
+    //           << metric.payment.ToString() << ','
+    //           << metric.interest.ToString() << ','
+    //           << metric.repayment.ToString() << ','
+    //           << metric.remainingDebt.ToString() << '\n';
 }

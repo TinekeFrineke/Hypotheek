@@ -12,7 +12,7 @@ class NormalPayment
 public:
     NormalPayment(const Utils::Date& date);
 
-    virtual hypotheekState nextState(const hypotheekState& state) const override;
+    virtual HypotheekStepResult nextState(const HypotheekState& state) const override;
 
 private:
     Utils::Date m_date;

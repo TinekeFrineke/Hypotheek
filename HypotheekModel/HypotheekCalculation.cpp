@@ -59,33 +59,6 @@ double roundup(double input) {
 
 }
 
-std::vector<HypotheekData> CreateMonthMetrics(const IHypotheek& hypotheek)
-{
-    constexpr auto looptijd = 360;
-    const auto loan = hypotheek.initialLoan();
-    auto remainingLoan = loan;
-    const auto monthlyInterest = hypotheek.effectiveMonthlyInterest();
-
-    MonthlyDate date(hypotheek.StartDate());
-
-    std::vector<HypotheekData> hyptheekData;
-    for (auto period = 0; period < looptijd; ++period) {
-        HypotheekData data;
-        data.startDate = (period == 0 ? hypotheek.StartDate() : date.date());
-        data.payment = hypotheek.GetMaandPremie();
-        auto interest1(remainingLoan.ToDouble() * monthlyInterest.GetPercentage() / 100.0); (void)interest1;
-        data.interest = Finance::Bedrag(remainingLoan.ToDouble() * monthlyInterest.GetPercentage() / 100);
-        data.repayment = data.payment - data.interest;
-        data.remainingDebt = remainingLoan - data.repayment;
-        hyptheekData.push_back(data);
-
-        remainingLoan -= data.repayment;
-        ++date;
-    }
-
-    return hyptheekData;
-}
-
 Finance::Bedrag calculateAnnuity(const Finance::Bedrag& restSchuld, const Percentage& jaarrente, int aantalPeriodes)
 {
     double jaarrentefractie = jaarrente.GetPercentage() / 100;
@@ -94,22 +67,17 @@ Finance::Bedrag calculateAnnuity(const Finance::Bedrag& restSchuld, const Percen
     return Finance::Bedrag(annuiteit);
 }
 
-splitPayment createSplitPayment(const hypotheekState& state)
+SplitPayment createSplitPayment(const HypotheekState& state)
 {
     return createSplitPayment(1, state.annuiteit, state.rente, state.restSchuld);
-
-    //Finance::Bedrag payment = state.annuiteit;
-    //auto rentebedrag = Finance::Bedrag(state.restSchuld.ToDouble() * (state.rente.GetPercentage() / 12) / 100);
-    //auto aflossing = state.annuiteit - rentebedrag;
-    //return { rentebedrag, aflossing };
 }
 
-splitPayment createSplitPayment(const Finance::Bedrag monthAnnuity, const Percentage& interest, const Finance::Bedrag& debt)
+SplitPayment createSplitPayment(const Finance::Bedrag monthAnnuity, const Percentage& interest, const Finance::Bedrag& debt)
 {
     return createSplitPayment(1, monthAnnuity, interest, debt);
 }
 
-splitPayment createSplitPayment(double fractionOfMonth, const Finance::Bedrag monthAnnuity, const Percentage& interest, const Finance::Bedrag& debt)
+SplitPayment createSplitPayment(double fractionOfMonth, const Finance::Bedrag monthAnnuity, const Percentage& interest, const Finance::Bedrag& debt)
 {
     Finance::Bedrag payment{ monthAnnuity.ToDouble() * fractionOfMonth };
     auto renteBedrag = Finance::Bedrag(debt.ToDouble() * fractionOfMonth * (interest.GetPercentage() / 12) / 100);

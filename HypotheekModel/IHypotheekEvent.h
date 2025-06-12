@@ -12,7 +12,7 @@ class IEvent
 public:
     virtual ~IEvent() = default;
 
-    virtual hypotheekState nextState(const hypotheekState& state) const = 0;
+    virtual HypotheekStepResult nextState(const HypotheekState& state) const = 0;
 };
 
 } // namespace hypotheek
