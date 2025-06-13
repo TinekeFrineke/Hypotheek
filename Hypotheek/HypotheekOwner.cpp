@@ -136,6 +136,11 @@ Utils::Date HypotheekOwner::StartDate() const
     return m_hypotheek->StartDate();
 }
 
+int HypotheekOwner::numberOfMonths() const
+{
+    return m_hypotheek->numberOfMonths();
+}
+
 Finance::Bedrag HypotheekOwner::maandRente(const Utils::Date& month) const
 {
     return m_hypotheek->maandRente(month);
@@ -209,5 +214,10 @@ void HypotheekOwner::SetStartDate(const Utils::Date& date)
 void HypotheekOwner::SetRentePercentage(const hypotheek::Percentage& jaarrente)
 {
     m_hypotheek->SetRentePercentage(jaarrente);
+}
+
+void HypotheekOwner::SetNumberOfMonths(int numberOfMonths)
+{
+    m_hypotheek->SetNumberOfMonths(numberOfMonths);
 }
 

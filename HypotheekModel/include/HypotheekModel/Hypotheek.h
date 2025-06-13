@@ -26,12 +26,14 @@ public:
     void SetHypotheekBedrag(const Finance::Bedrag& bedrag) override;
     void SetStartDate(const Utils::Date& date) override;
     void SetRentePercentage(const Percentage& jaarrente) override;
+    void SetNumberOfMonths(int numberOfMonths) override;
 
     Percentage effectiveMonthlyInterest() const;
 
     Finance::Bedrag initialLoan() const override;
     hypotheek::Percentage interestPercentage() const override;
     Utils::Date StartDate() const override;
+    int numberOfMonths() const override;
 
     void setExtraAflossing(const Utils::Date& date, const Finance::Bedrag& bedrag) override;
     void removeExtraAflossing(const Utils::Date& date) override;
@@ -41,6 +43,7 @@ protected:
     Finance::Bedrag mBedrag;
     Percentage mRentePercentage;
     Utils::Date mStartDate;
+    int mNumberOfMonths{ 360 };
 
 private:
     std::map<Utils::Date, Finance::Bedrag> m_extraAflossings;

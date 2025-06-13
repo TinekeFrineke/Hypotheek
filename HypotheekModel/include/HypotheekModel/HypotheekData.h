@@ -28,8 +28,8 @@ struct HypotheekState
     Utils::Date datum;
     int periodesTeGaan;
     Percentage rente;
-    Finance::Bedrag annuiteit;
-    Finance::Bedrag restSchuld;
+    Finance::Bedrag annuiteit{0.0};
+    Finance::Bedrag restSchuld{0.0};
 };
 
 struct HypotheekStepResult

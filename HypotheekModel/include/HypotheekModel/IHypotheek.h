@@ -42,10 +42,12 @@ public:
     virtual Finance::Bedrag jaarRente(const Utils::Date  & month) const = 0;
     virtual Finance::Bedrag jaarAflossing(const Utils::Date& month) const = 0;
     virtual Finance::Bedrag jaarRestSchuld(const Utils::Date& month) const = 0;
+    virtual int numberOfMonths() const = 0;
 
     virtual void SetHypotheekBedrag(const Finance::Bedrag& bedrag) = 0;
     virtual void SetStartDate(const Utils::Date& date) = 0;
     virtual void SetRentePercentage(const hypotheek::Percentage& jaarrente) = 0;
+    virtual void SetNumberOfMonths(int numberOfMonths) = 0;
     virtual void setExtraAflossing(const Utils::Date& date, const Finance::Bedrag& bedrag) = 0;
     virtual void removeExtraAflossing(const Utils::Date& date) = 0;
     virtual std::map<Utils::Date, Finance::Bedrag> getExtraAflossings() const = 0;

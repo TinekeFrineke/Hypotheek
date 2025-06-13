@@ -37,6 +37,7 @@ public:
     void SetHypotheekBedrag(const Finance::Bedrag& bedrag) override;
     void SetStartDate(const Utils::Date& date) override;
     void SetRentePercentage(const hypotheek::Percentage& jaarrente) override;
+    void SetNumberOfMonths(int numberOfMonths) override;
 
     Finance::Bedrag maandRente(const Utils::Date& month) const override;
     Finance::Bedrag maandAflossing(const Utils::Date& month) const override;
@@ -50,6 +51,7 @@ public:
     hypotheek::Percentage interestPercentage() const override;
     hypotheek::Percentage effectiveMonthlyInterest() const override;
     Utils::Date StartDate() const override;
+    int numberOfMonths() const override;
     std::map<Utils::Date, Finance::Bedrag> getExtraAflossings() const override;
     void accept(hypotheek::IVisitor& visitor) const override;
 

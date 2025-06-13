@@ -31,6 +31,14 @@ void Hypotheek::SetRentePercentage(const Percentage& jaarrente)
     mRentePercentage = jaarrente;
 }
 
+void Hypotheek::SetNumberOfMonths(int numberOfMonths)
+{
+    if (numberOfMonths <= 0)
+        throw std::invalid_argument("Hypotheek::SetNumberOfMonths: Invalidf number of months: " + std::to_string(numberOfMonths));
+
+    mNumberOfMonths = numberOfMonths;
+}
+
 Percentage Hypotheek::effectiveMonthlyInterest() const
 {
     return mRentePercentage.GetPercentage() / 12.0;
@@ -49,6 +57,11 @@ hypotheek::Percentage Hypotheek::interestPercentage() const
 Utils::Date Hypotheek::StartDate() const
 {
     return mStartDate;
+}
+
+int Hypotheek::numberOfMonths() const
+{
+    return mNumberOfMonths;
 }
 
 void Hypotheek::setExtraAflossing(const Utils::Date& date, const Finance::Bedrag& bedrag)
