@@ -67,6 +67,11 @@ Finance::Bedrag calculateAnnuity(const Finance::Bedrag& restSchuld, const Percen
     return Finance::Bedrag(annuiteit);
 }
 
+Finance::Bedrag calculateInterest(double fractionOfMonth, const Finance::Bedrag& restSchuld, const Percentage& jaarrente)
+{
+    return Finance::Bedrag(restSchuld.ToDouble() * fractionOfMonth * (jaarrente.GetPercentage() / 12) / 100);
+}
+
 SplitPayment createSplitPayment(const HypotheekState& state)
 {
     return createSplitPayment(1, state.annuiteit, state.rente, state.restSchuld);
@@ -80,7 +85,7 @@ SplitPayment createSplitPayment(const Finance::Bedrag monthAnnuity, const Percen
 SplitPayment createSplitPayment(double fractionOfMonth, const Finance::Bedrag monthAnnuity, const Percentage& interest, const Finance::Bedrag& debt)
 {
     Finance::Bedrag payment{ monthAnnuity.ToDouble() * fractionOfMonth };
-    auto renteBedrag = Finance::Bedrag(debt.ToDouble() * fractionOfMonth * (interest.GetPercentage() / 12) / 100);
+    auto renteBedrag = calculateInterest(fractionOfMonth, debt, interest);
     auto aflossing = payment - renteBedrag;
     return { renteBedrag, aflossing };
 }

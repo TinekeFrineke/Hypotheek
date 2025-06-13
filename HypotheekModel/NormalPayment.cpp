@@ -12,11 +12,12 @@ NormalPayment::NormalPayment(const Utils::Date& date)
 
 HypotheekStepResult NormalPayment::nextState(const HypotheekState& state) const
 {
-    auto difference(state.datum.DaysDifference(m_date));
+    double difference(state.datum.DaysDifference(m_date));
+    auto daysinMonth = daysInMonth(state.datum.Month(), state.datum.Year());
     double fraction = difference / daysInMonth(state.datum.Month(), state.datum.Year());
-    auto splitPayment = createSplitPayment(fraction, state.annuiteit, state.rente, state.restSchuld);
-//    auto splitPayment = createSplitPayment(state);
-    return { { m_date, state.periodesTeGaan - 1, state.rente, state.annuiteit, state.restSchuld - splitPayment.aflossing }, splitPayment };
+    Finance::Bedrag interest = calculateInterest(fraction, state.restSchuld, state.rente);
+    Finance::Bedrag aflossing = std::min(state.annuiteit - interest, state.restSchuld);
+    return { { m_date, state.periodesTeGaan - 1, state.rente, state.annuiteit, state.restSchuld - aflossing }, { interest, aflossing } };
 }
 
 

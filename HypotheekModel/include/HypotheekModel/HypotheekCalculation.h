@@ -20,6 +20,7 @@ struct HypotheekState;
 struct SplitPayment;
 
 Finance::Bedrag calculateAnnuity(const Finance::Bedrag& restSchuld, const Percentage& jaarrente, int aantalPeriodes);
+Finance::Bedrag calculateInterest(double fractionOfMonth, const Finance::Bedrag& restSchuld, const Percentage& jaarrente);
 // Splits the annuity in the interest and the repayment
 SplitPayment createSplitPayment(const HypotheekState& state);
 // Splits the annuity in the interest and the repayment

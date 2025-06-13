@@ -12,25 +12,80 @@
 #include "OverzichtCreator.h"
 
 namespace {
-const Utils::Date startDate(Utils::Date::DDay(1), Utils::Date::MONTH::January, Utils::Date::DYear(2000));
+const Utils::Date startDate(Utils::Date::DDay(1), Utils::Date::MONTH::February, Utils::Date::DYear(2023));
 
-std::unique_ptr<hypotheek::AnnuitaireHypotheek> createHypotheek(int bedrag, int rente, int periodes)
+std::unique_ptr<hypotheek::AnnuitaireHypotheek> createHypotheek(int bedrag, double rente, int periodes)
 {
     std::unique_ptr<hypotheek::AnnuitaireHypotheek> hypotheek = std::make_unique< hypotheek::AnnuitaireHypotheek>();
     hypotheek->SetHypotheekBedrag(Finance::Bedrag(double(bedrag)));
     hypotheek->SetRentePercentage(hypotheek::Percentage(rente));
     hypotheek->SetNumberOfMonths(periodes);
-    hypotheek->SetStartDate(Utils::Date(Utils::Date::DDay(1), Utils::Date::MONTH::January, Utils::Date::DYear(2000)));
+    hypotheek->SetStartDate(startDate);
     return std::move(hypotheek);
+}
+
+void print(const std::vector<hypotheek::HypotheekData>& entries)
+{
+    std::cout << "Startdatum - Annuiteit - Betaling - Aflossing - Rente - Restschuld" << std::endl;
+    for (const auto& entry : entries) {
+        std::cout << entry.startDate << "   - " << entry.payment << " - " << (entry.repayment + entry.interest) << " - " << entry.repayment << " - " << entry.interest << " - " << entry.remainingDebt << std::endl;
+    }
 }
 
 void TestCommon()
 {
+    std::cout << "*** TestCommon ***" << std::endl;
     auto hypotheek = createHypotheek(100000, 120, 1);
-    //hypotheek::EventCollection collection;
     hypotheek::OverzichtCreator creator;
     creator.visit(*hypotheek);
-    auto collection2(creator.collection()); (void)collection2;
+    print(creator.collection());
+    std::cout << "*** TestCommon END ***" << std::endl;
+}
+
+void TestLonger()
+{
+    std::cout << "*** TestLonger ***" << std::endl;
+    auto hypotheek = createHypotheek(100000, 120, 2);
+    hypotheek::OverzichtCreator creator;
+    creator.visit(*hypotheek);
+    print(creator.collection());
+
+    std::cout << "*** TestLonger END ***" << std::endl;
+}
+
+void TestNatasja()
+{
+    std::cout << "*** TestNatasja ***" << std::endl;
+    auto hypotheek = createHypotheek(133000, 3.5, 360);
+    hypotheek::OverzichtCreator creator;
+    creator.visit(*hypotheek);
+    print(creator.collection());
+
+    std::cout << "*** TestNatasja END ***" << std::endl;
+}
+
+void TestNatasjaExtraPayment()
+{
+    std::cout << "*** TestNatasjaExtraPayment ***" << std::endl;
+    auto hypotheek = createHypotheek(133000, 3.5, 360);
+    hypotheek->setExtraAflossing(Utils::Date(Utils::Date::DDay(16), Utils::Date::MONTH::June, Utils::Date::DYear(2025)), Finance::Bedrag(10000.0));
+    hypotheek::OverzichtCreator creator;
+    creator.visit(*hypotheek);
+    print(creator.collection());
+
+    std::cout << "*** TestNatasjaExtraPayment END ***" << std::endl;
+}
+
+void TestExtraPayment()
+{
+    std::cout << "*** TestExtraPayment ***" << std::endl;
+    auto hypotheek = createHypotheek(100000, 120, 2);
+    hypotheek->setExtraAflossing(Utils::Date(Utils::Date::DDay(16), Utils::Date::MONTH::February, Utils::Date::DYear(2000)), Finance::Bedrag(25000.0));
+    hypotheek::OverzichtCreator creator;
+    creator.visit(*hypotheek);
+    print(creator.collection());
+
+    std::cout << "*** TestExtraPayment END ***" << std::endl;
 }
 
 }
@@ -38,6 +93,10 @@ void TestCommon()
 int main()
 {
     TestCommon();
+    TestLonger();
+    TestExtraPayment();
+    TestNatasja();
+    TestNatasjaExtraPayment();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

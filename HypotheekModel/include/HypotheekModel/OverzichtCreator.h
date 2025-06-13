@@ -20,10 +20,10 @@ public:
     virtual void visit(const AnnuitaireHypotheek& hypotheek) override;
     virtual void visit(const AflossingsvrijeHypotheek& hypotheek) override;
 
-    const std::vector<HypotheekEntry>& collection() const { return m_eventData; }
+    const std::vector<HypotheekData>& collection() const { return m_result; }
 
 private:
-    std::vector<HypotheekEntry> m_eventData;
+    std::vector<HypotheekData> m_result;
 };
 
 } // namespace hypotheek
