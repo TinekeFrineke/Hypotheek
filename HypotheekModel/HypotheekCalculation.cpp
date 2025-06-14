@@ -72,24 +72,6 @@ Finance::Bedrag calculateInterest(double fractionOfMonth, const Finance::Bedrag&
     return Finance::Bedrag(restSchuld.ToDouble() * fractionOfMonth * (jaarrente.GetPercentage() / 12) / 100);
 }
 
-SplitPayment createSplitPayment(const HypotheekState& state)
-{
-    return createSplitPayment(1, state.annuiteit, state.rente, state.restSchuld);
-}
-
-SplitPayment createSplitPayment(const Finance::Bedrag monthAnnuity, const Percentage& interest, const Finance::Bedrag& debt)
-{
-    return createSplitPayment(1, monthAnnuity, interest, debt);
-}
-
-SplitPayment createSplitPayment(double fractionOfMonth, const Finance::Bedrag monthAnnuity, const Percentage& interest, const Finance::Bedrag& debt)
-{
-    Finance::Bedrag payment{ monthAnnuity.ToDouble() * fractionOfMonth };
-    auto renteBedrag = calculateInterest(fractionOfMonth, debt, interest);
-    auto aflossing = payment - renteBedrag;
-    return { renteBedrag, aflossing };
-}
-
 unsigned int daysInMonth(Utils::Date::MONTH month, int year)
 {
     auto ym = std::chrono::year_month{ std::chrono::year{year}, std::chrono::month{static_cast<unsigned int>(month)} };

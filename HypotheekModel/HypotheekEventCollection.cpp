@@ -28,10 +28,9 @@ std::vector<HypotheekData> EventCollection::calculate()
     HypotheekState state{};
 
     std::vector<HypotheekData> hypotheekData;
-    std::vector<HypotheekEntry> eventData;
     for (const auto& event : m_events) {
         auto result = event.second->nextState(state);
-        hypotheekData.push_back({ event.first, state.annuiteit, result.splitPayment.rente, result.splitPayment.aflossing, result.state.restSchuld });
+        hypotheekData.push_back({ event.first, state.annuiteit, result.rente, result.aflossing, result.state.restSchuld });
         state = result.state;
     }
     

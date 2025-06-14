@@ -17,7 +17,7 @@ HypotheekStepResult NormalPayment::nextState(const HypotheekState& state) const
     double fraction = difference / daysInMonth(state.datum.Month(), state.datum.Year());
     Finance::Bedrag interest = calculateInterest(fraction, state.restSchuld, state.rente);
     Finance::Bedrag aflossing = std::min(state.annuiteit - interest, state.restSchuld);
-    return { { m_date, state.periodesTeGaan - 1, state.rente, state.annuiteit, state.restSchuld - aflossing }, { interest, aflossing } };
+    return { { m_date, state.periodesTeGaan - 1, state.rente, state.annuiteit, state.restSchuld - aflossing }, interest, aflossing };
 }
 
 

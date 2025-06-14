@@ -21,12 +21,6 @@ struct SplitPayment;
 
 Finance::Bedrag calculateAnnuity(const Finance::Bedrag& restSchuld, const Percentage& jaarrente, int aantalPeriodes);
 Finance::Bedrag calculateInterest(double fractionOfMonth, const Finance::Bedrag& restSchuld, const Percentage& jaarrente);
-// Splits the annuity in the interest and the repayment
-SplitPayment createSplitPayment(const HypotheekState& state);
-// Splits the annuity in the interest and the repayment
-SplitPayment createSplitPayment(const Finance::Bedrag annuiteit, const Percentage& jaarrente, const Finance::Bedrag& restSchuld);
-// Calculates all values for fractionOfMonth * monthly values
-SplitPayment createSplitPayment(double fractionOfMonth, const Finance::Bedrag annuiteit, const Percentage& jaarrente, const Finance::Bedrag& restSchuld);
 unsigned int daysInMonth(Utils::Date::MONTH month, int year);
 double daysFraction(unsigned int dayFrom, unsigned int dayTo, Utils::Date::MONTH month, int year);
 

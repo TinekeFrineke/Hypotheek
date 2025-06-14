@@ -17,7 +17,7 @@ HypotheekStepResult FirstEmptyPayment::nextState(const HypotheekState& state) co
 {
     auto annuiteit = calculateAnnuity(m_restSchuld, m_rente, m_periodesTeGaan);
 
-    return { { m_date, m_periodesTeGaan, m_rente, annuiteit, m_restSchuld }, { Finance::Bedrag(0.0), Finance::Bedrag(0.0) } };
+    return { { m_date, m_periodesTeGaan, m_rente, annuiteit, m_restSchuld }, Finance::Bedrag(0.0), Finance::Bedrag(0.0) };
 }
 
 

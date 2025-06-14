@@ -17,12 +17,6 @@ struct HypotheekData
     Finance::Bedrag remainingDebt;
 };
 
-struct SplitPayment
-{
-    Finance::Bedrag rente;
-    Finance::Bedrag aflossing;
-};
-
 struct HypotheekState
 {
     Utils::Date datum;
@@ -35,22 +29,8 @@ struct HypotheekState
 struct HypotheekStepResult
 {
     HypotheekState state;
-    SplitPayment splitPayment;
+    Finance::Bedrag rente;
+    Finance::Bedrag aflossing;
 };
-
-struct HypotheekEntry
-{
-    Utils::Date datum;
-    Percentage rente;
-    Percentage aflossing;
-    Finance::Bedrag restSchuld;
-};
-
-//struct HypotheekEventData {
-//    Utils::Date date;
-//    HypotheekState state;
-//};
-
-// Date / annuiteit / aflossing / rente / restschuld
 
 } // namespace hypotheek

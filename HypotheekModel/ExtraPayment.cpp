@@ -25,7 +25,7 @@ HypotheekStepResult ExtraPayment::nextState(const HypotheekState& state) const
     const auto restschuld = state.restSchuld - aflossing;
     const auto annuiteit = calculateAnnuity(restschuld, state.rente, state.periodesTeGaan);
 
-    return { { m_date, state.periodesTeGaan, state.rente, annuiteit, restschuld }, { rente, aflossing } };
+    return { { m_date, state.periodesTeGaan, state.rente, annuiteit, restschuld }, rente, aflossing };
 }
 
 
