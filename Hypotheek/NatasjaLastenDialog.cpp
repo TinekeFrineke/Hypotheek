@@ -56,6 +56,9 @@ void NatasjaLastenDialog::OnShowWindow(BOOL bShow, UINT nStatus)
         catch (...) {
         }
         mRentePercentage.SetValue(Str::ToDouble(mInifile.get("natasja", "rentepercentage")));
+        auto keys(mInifile.getKeys("extraaflossingen"));
+        for (const auto& key : keys)
+            m_hypotheek->setExtraAflossing(Utils::ToDate(key), Finance::Bedrag(mInifile.get("extraaflossingen", key)));
 
         mSchenkingen.SetValue(Str::ToDouble(mInifile.get("natasja", "schenkingen")));
         m_hypotheek->SetHypotheekBedrag(Finance::Bedrag(mLening.GetValue()));

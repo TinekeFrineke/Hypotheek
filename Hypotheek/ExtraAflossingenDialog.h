@@ -34,8 +34,8 @@ public:
 	enum { IDD = IDD_EXTRA_AFLOSSINGEN };
 #endif
 
-    afx_msg void OnBnClickedButton1();
-    afx_msg void OnBnClickedButton2();
+    afx_msg void OnBnClickedOk();
+    afx_msg void OnBnClickedCancel();
 
     BOOL OnInitDialog() override;
     void OnShowWindow(BOOL bShow, UINT nStatus);

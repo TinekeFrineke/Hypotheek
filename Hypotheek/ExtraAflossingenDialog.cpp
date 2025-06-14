@@ -33,8 +33,9 @@ void ExtraAflossingenDialog::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(ExtraAflossingenDialog, CDialogEx)
-	ON_BN_CLICKED(IDC_BUTTON1, &ExtraAflossingenDialog::OnBnClickedButton1)
-	ON_BN_CLICKED(IDC_BUTTON2, &ExtraAflossingenDialog::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_OK, &ExtraAflossingenDialog::OnBnClickedOk)
+	ON_BN_CLICKED(IDC_CANCEL, &ExtraAflossingenDialog::OnBnClickedCancel)
+	ON_WM_SHOWWINDOW()
 END_MESSAGE_MAP()
 
 
@@ -48,36 +49,17 @@ BOOL ExtraAflossingenDialog::OnInitDialog()
 
 	m_aflossingenList.Initialize();
 	m_aflossingenList.SetSelectionMark(0);
+	View();
 	m_aflossingenList.ShowWindow(SW_SHOW);
+	View();
 	return true;
 }
 
 
 void ExtraAflossingenDialog::OnShowWindow(BOOL bShow, UINT nStatus)
 {
+	__super::OnShowWindow(bShow, nStatus);
 	View();
-}
-
-
-void ExtraAflossingenDialog::OnBnClickedButton1()
-{
-	ExtraAflossingDialog dialog(this);
-	if (dialog.DoModal() == IDOK) {
-		m_hypotheek->setExtraAflossing(dialog.GetDate(), dialog.GetBedrag());
-		View();
-	}
-}
-
-
-void ExtraAflossingenDialog::OnBnClickedButton2()
-{
-	const auto item = m_aflossingenList.GetSelectedItem();
-	if (item == nullptr)
-		return;
-
-	m_hypotheek->removeExtraAflossing(item->GetItem().date);
-	mInifile.erase("ExtraAflossingen", ToString(item->GetItem().date));
-	m_aflossingenList.RemoveSelectedItem();
 }
 
 
@@ -88,4 +70,26 @@ void ExtraAflossingenDialog::View()
 	for (const auto& aflossing : alist)
 		extras.push_back({ aflossing.first, aflossing.second });
 	m_aflossingenList.View(extras);
+}
+
+
+void ExtraAflossingenDialog::OnBnClickedOk()
+{
+	ExtraAflossingDialog dialog(this);
+	if (dialog.DoModal() == IDOK) {
+		m_hypotheek->setExtraAflossing(dialog.GetDate(), dialog.GetBedrag());
+		View();
+	}
+}
+
+
+void ExtraAflossingenDialog::OnBnClickedCancel()
+{
+	const auto item = m_aflossingenList.GetSelectedItem();
+	if (item == nullptr)
+		return;
+
+	m_hypotheek->removeExtraAflossing(item->GetItem().date);
+	mInifile.erase("ExtraAflossingen", ToString(item->GetItem().date));
+	m_aflossingenList.RemoveSelectedItem();
 }

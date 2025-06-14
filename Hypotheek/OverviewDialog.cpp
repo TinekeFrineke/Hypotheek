@@ -78,8 +78,12 @@ void OverviewDialog::fillMonthlyOverview()
     hypotheek::OverzichtCreator creator;
     m_hypotheek->accept(creator);
 
-
-//    m_overviewList.View(overviewData);
+    const auto overzichtData(creator.collection());
+    m_overviewData.clear();
+    for (auto overzichtEntry : overzichtData)
+        m_overviewData.push_back({ overzichtEntry.startDate, overzichtEntry.payment, overzichtEntry.interest,
+                                overzichtEntry.repayment, overzichtEntry.remainingDebt });
+    m_overviewList.View(m_overviewData);
 }
 
 void OverviewDialog::fillYearlyOverview()
@@ -119,13 +123,12 @@ void OverviewDialog::OnShowWindow(BOOL bShow, UINT nStatus)
 
 void OverviewDialog::OnExportButtonClicked()
 {
-    //const auto metrics = hypotheek::CreateMonthMetrics(*m_hypotheek);
-    //std::ofstream output("overzicht.csv");
-    //output << "Datum,betaling,rente,aflossing,restschuld\n";
-    //for (const auto& metric : metrics)
-    //    output << Utils::ToString(metric.startDate) << ','
-    //           << metric.payment.ToString() << ','
-    //           << metric.interest.ToString() << ','
-    //           << metric.repayment.ToString() << ','
-    //           << metric.remainingDebt.ToString() << '\n';
+    std::ofstream output("overzicht.csv");
+    output << "Datum,betaling,rente,aflossing,restschuld\n";
+    for (const auto& entry : m_overviewData)
+        output << Utils::ToString(entry.startDate) << ','
+               << entry.payment.ToString() << ','
+               << entry.interest.ToString() << ','
+               << entry.repayment.ToString() << ','
+               << entry.remainingDebt.ToString() << '\n';
 }

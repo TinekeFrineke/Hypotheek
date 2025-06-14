@@ -55,6 +55,10 @@ public:
     std::map<Utils::Date, Finance::Bedrag> getExtraAflossings() const override;
     void accept(hypotheek::IVisitor& visitor) const override;
 
+    void writeInifile();
+    void readInifile();
+
+private:
     void VulPandenUitInifile();
     void PandenToInifile();
 

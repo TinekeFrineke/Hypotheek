@@ -48,7 +48,9 @@
 #define IDC_OVERVIEW_LIST               1035
 #define IDC_AFLOSSINGEN_LIST            1035
 #define IDC_BUTTON1                     1038
+#define IDC_OK                          1038
 #define IDC_BUTTON2                     1039
+#define IDC_CANCEL                      1039
 #define IDC_EDIT2                       1040
 #define IDC_BEDRAG                      1040
 

@@ -94,7 +94,7 @@ END_MESSAGE_MAP()
 
 BOOL CHypotheekDialog::OnInitDialog()
 {
-    m_hypotheekOwner->VulPandenUitInifile();
+    m_hypotheekOwner->readInifile();
 
     mTabControl.AddPage(new InvoerDialog(std::static_pointer_cast<IHypotheekOwner>(m_hypotheekOwner), mInifile, this), IDD_INVOER_DIALOG, L"Invoer");
     mTabControl.AddPage(new NatasjaLastenDialog(std::static_pointer_cast<IHypotheekOwner>(m_hypotheekOwner)/*mApplication*/, mInifile, this), IDD_LASTEN_NATASJA_DIALOG, L"Lasten Natasja");
@@ -186,7 +186,7 @@ HCURSOR CHypotheekDialog::OnQueryDragIcon()
 
 void CHypotheekDialog::OnDestroy()
 {
-    m_hypotheekOwner->PandenToInifile();
+    m_hypotheekOwner->writeInifile();
 
     TCHAR dir[MAX_PATH];
     GetCurrentDirectory(MAX_PATH, dir);

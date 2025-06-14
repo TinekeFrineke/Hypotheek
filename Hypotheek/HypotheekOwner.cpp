@@ -104,16 +104,35 @@ void HypotheekOwner::PandenToInifile()
         m_inifile.set("panden", "pand" + std::to_string(i), mPanden[i]);
 
     m_inifile.set("panden", "huidigpand", mPand);
+    m_inifile.erase("extraaflossingen");
+    for (const auto aflossing : m_hypotheek->getExtraAflossings())
+        m_inifile.set("extraaflossingen", ToString(aflossing.first), aflossing.second.ToString());
 }
 
 std::map<Utils::Date, Finance::Bedrag> HypotheekOwner::getExtraAflossings() const
 {
+    if (m_hypotheek == nullptr)
+        return {};
     return m_hypotheek->getExtraAflossings();
 }
 
 void HypotheekOwner::accept(hypotheek::IVisitor& visitor) const
 {
     m_hypotheek->accept(visitor);
+}
+
+void HypotheekOwner::writeInifile()
+{
+    PandenToInifile();
+    m_inifile.erase("extraaflossingen");
+    for (const auto aflossing : m_hypotheek->getExtraAflossings())
+        m_inifile.set("extraaflossingen", ToString(aflossing.first), aflossing.second.ToString());
+
+}
+
+void HypotheekOwner::readInifile()
+{
+    VulPandenUitInifile();
 }
 
 Finance::Bedrag HypotheekOwner::initialLoan() const

@@ -31,12 +31,6 @@ void OverzichtCreator::visit(const AnnuitaireHypotheek& hypotheek)
         collection.addEvent(aflossing.first, std::make_unique<ExtraPayment>(aflossing.first, aflossing.second));
 
     m_result = collection.calculate();
-
-    std::ofstream stream("C:\\Tineke\\hypotheek.txt");
-    stream << "Startdatum - Aflossing - Rente - Restschuld" << std::endl;
-    for (const auto& entry : m_result) {
-        stream << entry.startDate << " - " << entry.repayment << " - " << entry.interest << " - " << entry.remainingDebt << std::endl;
-    }
 }
 
 void OverzichtCreator::visit(const AflossingsvrijeHypotheek& hypotheek)
