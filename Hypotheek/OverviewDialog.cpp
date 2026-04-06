@@ -5,6 +5,7 @@
 
 #include "OverviewDialog.h"
 
+#include <algorithm>
 #include <fstream>
 
 #include "afxdialogex.h"
@@ -14,6 +15,8 @@
 #include <HypotheekModel/IHypotheek.h>
 #include <HypotheekModel/OverzichtCreator.h>
 
+#undef min
+#undef max
 // OverviewDialog dialog
 
 IMPLEMENT_DYNAMIC(OverviewDialog, CDialogEx)
@@ -80,7 +83,7 @@ void OverviewDialog::fillMonthlyOverview()
 
     const auto overzichtData(creator.collection());
     m_overviewData.clear();
-    for (auto overzichtEntry : overzichtData)
+    for (const auto & overzichtEntry : overzichtData)
         m_overviewData.push_back({ overzichtEntry.startDate, overzichtEntry.payment, overzichtEntry.interest,
                                 overzichtEntry.repayment, overzichtEntry.remainingDebt });
     m_overviewList.View(m_overviewData);
@@ -123,12 +126,44 @@ void OverviewDialog::OnShowWindow(BOOL bShow, UINT nStatus)
 
 void OverviewDialog::OnExportButtonClicked()
 {
-    std::ofstream output("overzicht.csv");
-    output << "Datum,betaling,rente,aflossing,restschuld\n";
-    for (const auto& entry : m_overviewData)
-        output << Utils::ToString(entry.startDate) << ','
-               << entry.payment.ToString() << ','
-               << entry.interest.ToString() << ','
-               << entry.repayment.ToString() << ','
-               << entry.remainingDebt.ToString() << '\n';
+    if (m_type == Type::Yearly) {
+        std::ofstream output("jaaroverzicht.csv");
+        std::ofstream log("jaaroverzicht.log");
+
+        output << "Datum,betaling,rente,aflossing,restschuld\n";
+        std::map<int, OverviewData> yearlyData;
+        for (const auto& entry : m_overviewData) {
+            log << "processing " << entry.startDate
+                << " payment " << entry.payment
+                << " interest " << entry.interest
+                << " repayment " << entry.repayment;
+            auto& newEntry = yearlyData[entry.startDate.Year()];
+            newEntry.payment += entry.payment;
+            newEntry.interest += entry.interest;
+            newEntry.repayment += entry.repayment;
+            auto bedrag = std::min(newEntry.remainingDebt.ToDouble(), entry.remainingDebt.ToDouble());
+            if (newEntry.remainingDebt == Finance::Bedrag(0.0))
+                newEntry.remainingDebt = entry.remainingDebt;
+            else
+                newEntry.remainingDebt = Finance::Bedrag(std::min(newEntry.remainingDebt.ToDouble(), entry.remainingDebt.ToDouble()));
+        }
+
+        for (auto entry : yearlyData)
+            output << entry.first << ','
+            << entry.second.payment.ToString() << ','
+            << entry.second.interest.ToString() << ','
+            << entry.second.repayment.ToString() << ','
+            << entry.second.remainingDebt.ToString() << '\n';
+
+    }
+    else {
+        std::ofstream output("overzicht.csv");
+        output << "Datum,betaling,rente,aflossing,restschuld\n";
+        for (const auto& entry : m_overviewData)
+            output << Utils::ToString(entry.startDate) << ','
+            << entry.payment.ToString() << ','
+            << entry.interest.ToString() << ','
+            << entry.repayment.ToString() << ','
+            << entry.remainingDebt.ToString() << '\n';
+    }
 }

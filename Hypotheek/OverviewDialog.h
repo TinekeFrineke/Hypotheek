@@ -54,7 +54,7 @@ private:
     Type m_type{};
     std::shared_ptr<IHypotheek> m_hypotheek;
     utils::Inifile& mInifile;
-    std::vector< OverviewData> m_overviewData;
+    std::vector<OverviewData> m_overviewData;
 
     OverviewList m_overviewList;
 public:
